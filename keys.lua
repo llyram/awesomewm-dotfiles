@@ -17,8 +17,6 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 require("awful.hotkeys_popup.keys")
 
 apps = require("apps")
-local switcher = require("awesome-switcher")
-
 
 -- Initialize widgets
 require("awesome-wm-widgets.exit-screen.exit-screen")
@@ -35,8 +33,8 @@ altkey = "Mod1"
 -- {{{ Mouse bindings
 awful.mouse.append_global_mousebindings({
     awful.button({}, 3, function() mymainmenu:toggle() end),
-    awful.button({}, 4, awful.tag.viewprev),
-    awful.button({}, 5, awful.tag.viewnext)
+    -- awful.button({}, 4, awful.tag.viewprev),
+    -- awful.button({}, 5, awful.tag.viewnext)
 })
 -- }}}
 

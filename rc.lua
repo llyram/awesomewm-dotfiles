@@ -16,7 +16,6 @@ local dpi = require("beautiful.xresources").apply_dpi
 -- Mouse and Keybindings
 require("keys")
 
-require("awesome-switcher")
 
 -- Initializing modules
 require('module.notifications')
