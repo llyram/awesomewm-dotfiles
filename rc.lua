@@ -221,7 +221,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
         -- expand = "none",
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
-            wibox.container.background(wibox.layout.margin(s.mylayoutbox, dpi(5), 5, 5, 5), "#3c3836"),
+            wibox.container.background(wibox.layout.margin(s.mylayoutbox, dpi(5), 5, 5, 5), gruvbox.blue),
             s.mytaglist,
             s.mypromptbox,
         },
@@ -399,7 +399,7 @@ naughty.connect_signal("request::display", function(n)
                         margins = dpi(10),
                         widget = wibox.container.margin
                     },
-                    bg = "#282828",
+                    -- bg = "#282828",
                     widget = wibox.widget.background
 
                 },
@@ -466,7 +466,7 @@ awful.util.spawn("nm-applet --indicator")
 awful.util.spawn("kdeconnect-indicator")
 awful.util.spawn("blueman-applet")
 awful.util.spawn("xfce4-power-manager")
-awful.util.spawn("fusuma")
+-- awful.util.spawn("redshift-gtk -l 20.5937:78.9629 -t 6500:3400")
 
 local box = wibox.widget{
     widget = wibox.container.background,
