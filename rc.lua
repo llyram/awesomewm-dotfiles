@@ -119,7 +119,7 @@ end)
 
 screen.connect_signal("request::desktop_decoration", function(s)
      -- Each screen has its own tag table.
-     awful.tag({"  ", "  ", "  ", "  ", "  "}, s,
+     awful.tag({"  ", "  ", "  ", "  ", "  "}, s,
                awful.layout.layouts[1])
 
      -- Create a promptbox for each screen
@@ -372,73 +372,78 @@ naughty.connect_signal("request::display", function(n)
     naughty.layout.box {
         notification = n,
         type = "notification",
-        shape = gears.shape.rounded_rect,
-        -- shape = function(cr, width, height)
-        --     gears.shape.rounded_rect(cr, width, height, 10)
-        -- end,
+        -- shape = gears.shape.rounded_rect,
+        shape = function(cr, width, height)
+            gears.shape.rounded_rect(cr, width, height, 3)
+        end,
         -- border_width = 0,
         -- border_color = "#000000",
         widget_template = {
             {
-                ----- Icon -----
-                -- naughty.widget.icon,
-                { ----- Icon -----
-                    {
+                {
+                    ----- Icon -----
+                    -- naughty.widget.icon,
+                    { ----- Icon -----
                         {
                             {
-                                -- forced_width = icon_size,
-                                -- forced_height = icon_size,
-                                resize = true,
+                                {
+                                    -- forced_width = icon_size,
+                                    -- forced_height = icon_size,
+                                    resize = true,
 
-                                widget = naughty.widget.icon
+                                    widget = naughty.widget.icon
+                                },
+                                widget = wibox.container.constraint,
+                                width = dpi(30),
+                                height = dpi(30),
                             },
-                            widget = wibox.container.constraint,
-                            width = dpi(30),
-                            height = dpi(30),
+                            margins = dpi(10),
+                            widget = wibox.container.margin
                         },
-                        margins = dpi(10),
-                        widget = wibox.container.margin
-                    },
-                    -- bg = "#282828",
-                    widget = wibox.widget.background
+                        -- bg = "#282828",
+                        widget = wibox.widget.background
 
-                },
-                {
+                    },
                     {
-                        { ---- Title -----
-                            -- naughty.widget.title,
-                            text = n.title,
-                            align = "center",
-                            font = "Bangers",
-                            widget = wibox.widget.textbox
+                        {
+                            { ---- Title -----
+                                -- naughty.widget.title,
+                                text = n.title,
+                                align = "center",
+                                font = "Bangers",
+                                widget = wibox.widget.textbox
+                            },
+
+                            { ----- Body/Message -----
+                                
+                                widget = naughty.widget.message,
+                                align = "left",
+
+                                -- font = "Poppins 15",
+                                -- text = n.message,
+
+                                -- widget = wibox.widget.textbox
+
+                            },
+                            layout = wibox.layout.align.vertical
+                            -- expand = "none"
+
                         },
 
-                        { ----- Body/Message -----
-                            
-                            widget = naughty.widget.message,
-                            align = "left",
-
-                            -- font = "Poppins 15",
-                            -- text = n.message,
-
-                            -- widget = wibox.widget.textbox
-
-                        },
-                        layout = wibox.layout.align.vertical
-                        -- expand = "none"
-
+                        margins = dpi(10),
+                        widget = wibox.container.margin,
                     },
-
-                    margins = dpi(10),
-                    widget = wibox.container.margin
+                    layout = wibox.layout.align.horizontal
                 },
-                layout = wibox.layout.align.horizontal
-            },
 
-            strategy = "max",
-            height = dpi(180),
-            width = dpi(400),
-            widget = wibox.container.constraint
+                strategy = "max",
+                height = dpi(180),
+                width = dpi(400),
+                widget = wibox.container.constraint
+            },
+            widget = wibox.container.margin,
+            bottom = dpi(2),
+            color = "#ffffff"
 
         }
     }
