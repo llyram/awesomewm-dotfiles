@@ -39,6 +39,8 @@ function notif()
             timeout = timeout,
             icon = brightness_icon,
             font = "Sans Regular 15",
+            type = "indicator",
+            title = "indicator"
         }
     end
 end

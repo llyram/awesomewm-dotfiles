@@ -2,12 +2,13 @@ local naughty = require('naughty')
 local beautiful = require('beautiful')
 local gears = require('gears')
 local dpi = require('beautiful').xresources.apply_dpi
+local wibox = require('wibox')
 
 -- Naughty presets
-naughty.config.padding = 20
-naughty.config.spacing = 20
+naughty.config.padding = 100
+naughty.config.spacing = 100
 
-naughty.config.defaults.timeout = 5
+naughty.config.defaults.timeout = 3
 naughty.config.defaults.screen = 1
 naughty.config.defaults.position = 'bottom_right'
 naughty.config.defaults.margin = dpi(16)
@@ -18,7 +19,7 @@ naughty.config.defaults.icon_size = dpi(32)
 -- naughty.config.defaults.shape = gears.shape.rounded_rect
 naughty.config.defaults.border_width = 0
 naughty.config.defaults.hover_timeout = nil
-naughty.config.defaults.border_width = dpi(1)
+-- naughty.config.defaults.border_width = dpi(1)
 -- naughty.config.defaults.border_color = '#bd93f9'
 naughty.config.defaults.bg_color = "#000000"
 
@@ -49,3 +50,147 @@ end
 function log_this(title, txt)
     naughty.notify({title = 'log: ' .. title, text = txt})
 end
+
+
+
+
+naughty.connect_signal("request::display", function(n)
+    
+    if n.title == "indicator" then
+        naughty.layout.box {
+            notification = n,
+            type = "notification",
+            shape = function(cr, width, height)
+                gears.shape.rounded_rect(cr, width, height, 10)
+            end,
+            widget_template = {
+                {
+                    ----- Icon -----
+                    -- naughty.widget.icon,
+                    { ----- Icon -----
+                        {
+                            {
+                                {
+                                    -- forced_width = icon_size,
+                                    -- forced_height = icon_size,
+                                    resize = true,
+        
+                                    widget = naughty.widget.icon
+                                },
+                                widget = wibox.container.constraint,
+                                width = dpi(30),
+                                height = dpi(30),
+                            },
+                            margins = dpi(10),
+                            widget = wibox.container.margin
+                        },
+                        -- bg = "#282828",
+                        widget = wibox.widget.background
+        
+                    },
+                    {
+                        {
+        
+                            { ----- Body/Message -----
+                                
+                                widget = naughty.widget.message,
+                                align = "left",
+        
+                                -- font = "Poppins 15",
+                                -- text = n.message,
+        
+                                -- widget = wibox.widget.textbox
+        
+                            },
+                            layout = wibox.layout.align.vertical
+                            -- expand = "none"
+        
+                        },
+        
+                        margins = dpi(10),
+                        widget = wibox.container.margin,
+                    },
+                    layout = wibox.layout.align.horizontal
+                },
+        
+                strategy = "max",
+                height = dpi(180),
+                width = dpi(400),
+                widget = wibox.container.constraint
+            },
+        }
+    else 
+        naughty.layout.box {
+            notification = n,
+            type = "notification",
+            shape = function(cr, width, height)
+                gears.shape.rounded_rect(cr, width, height, 3)
+            end,
+            widget_template = {
+                {
+                    ----- Icon -----
+                    -- naughty.widget.icon,
+                    { ----- Icon -----
+                        {
+                            {
+                                {
+                                    -- forced_width = icon_size,
+                                    -- forced_height = icon_size,
+                                    resize = true,
+        
+                                    widget = naughty.widget.icon
+                                },
+                                widget = wibox.container.constraint,
+                                width = dpi(30),
+                                height = dpi(30),
+                            },
+                            margins = dpi(10),
+                            widget = wibox.container.margin
+                        },
+                        -- bg = "#282828",
+                        widget = wibox.widget.background
+        
+                    },
+                    {
+                        {
+                            { ---- Title -----
+                                -- naughty.widget.title,
+                                text = n.title,
+                                align = "center",
+                                font = "Bangers",
+                                widget = wibox.widget.textbox
+                            },
+        
+                            { ----- Body/Message -----
+                                
+                                widget = naughty.widget.message,
+                                align = "left",
+        
+                                -- font = "Poppins 15",
+                                -- text = n.message,
+        
+                                -- widget = wibox.widget.textbox
+        
+                            },
+                            layout = wibox.layout.align.vertical
+                            -- expand = "none"
+        
+                        },
+        
+                        margins = dpi(10),
+                        widget = wibox.container.margin,
+                    },
+                    layout = wibox.layout.align.horizontal
+                },
+        
+                strategy = "max",
+                height = dpi(180),
+                width = dpi(400),
+                widget = wibox.container.constraint
+            },
+        }
+    end
+    
+end)
+
+
