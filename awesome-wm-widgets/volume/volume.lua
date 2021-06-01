@@ -45,6 +45,7 @@ function volume.notif()
             position = "top_left",
             icon = volume_icon,
             font = "Sans Regular 15",
+            title = "indicator"
         }
     end
 end

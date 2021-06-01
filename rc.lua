@@ -19,7 +19,6 @@ require("keys")
 
 -- Initializing modules
 require('module.notifications')
-require('layout.bottom-bar')
 
 -- Initializing widgets
 local battery_widget = require("awesome-wm-widgets.battery-widget.battery")
@@ -287,6 +286,16 @@ ruled.client.connect_signal("request::rules", function()
         }
     }
 
+    ruled.client.append_rule {
+        id = "ontop",
+        rule = {
+            class = {"pip"}
+        },
+        properties = {
+            ontop = true
+        }
+    }
+
     -- Floating clients.
     ruled.client.append_rule {
         id = "floating",
@@ -298,7 +307,7 @@ ruled.client.connect_signal("request::rules", function()
             class = {
                 "Arandr", "Blueman-manager", "Gpick", "Kruler", "Sxiv",
                 "Tor Browser", "Wpa_gui", "veromix", "xtightvncviewer", "Wine",
-                "CPU Simulator"
+                "CPU Simulator", "pip"
             },
             -- Note that the name property shown in xprop might be set slightly after creation of the client
             -- and the name shown thfloatingere might not match defined rules here.
@@ -391,13 +400,3 @@ awful.util.spawn("kdeconnect-indicator")
 awful.util.spawn("blueman-applet")
 awful.util.spawn("xfce4-power-manager")
 -- awful.util.spawn("redshift-gtk -l 20.5937:78.9629 -t 6500:3400")
-
-local box = wibox.widget{
-    widget = wibox.container.background,
-    bg = "#ffffff",
-    forced_width = 500,
-    forced_height = 500,
-    visible = true,
-    ontop = true,
-    shape = gears.shape.rounded_rect,
-}

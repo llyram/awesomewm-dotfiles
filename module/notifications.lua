@@ -55,6 +55,38 @@ end
 
 
 naughty.connect_signal("request::display", function(n)
+
+    local actions = wibox.widget {
+        notification = n,
+        base_layout = wibox.widget {
+            spacing = dpi(3),
+            layout = wibox.layout.flex.horizontal
+        },
+        widget_template = {
+            {
+                {
+                    {
+                        id = 'text_role',
+                        -- font = beautiful.notification_font,
+                        widget = wibox.widget.textbox
+                    },
+                    left = dpi(6),
+                    right = dpi(6),
+                    widget = wibox.container.margin
+                },
+                widget = wibox.container.place
+            },
+            bg = "#000000",
+            forced_height = dpi(25),
+            forced_width = dpi(70),
+            widget = wibox.container.background
+        },
+        style = {
+            underline_normal = false,
+            underline_selected = true
+        },
+        widget = naughty.list.actions
+    }
     
     if n.title == "indicator" then
         naughty.layout.box {
@@ -172,6 +204,7 @@ naughty.connect_signal("request::display", function(n)
                                 -- widget = wibox.widget.textbox
         
                             },
+                            actions,
                             layout = wibox.layout.align.vertical
                             -- expand = "none"
         

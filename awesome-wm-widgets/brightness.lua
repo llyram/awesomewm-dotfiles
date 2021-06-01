@@ -40,7 +40,9 @@ function notif()
             icon = brightness_icon,
             font = "Sans Regular 15",
             type = "indicator",
-            title = "indicator"
+            title = "indicator",
+            -- actions = {"hello"}
+            -- actions = {naughty.action { name = "Jump to client" },naughty.action { name = "Jump to client" }}
         }
     end
 end
