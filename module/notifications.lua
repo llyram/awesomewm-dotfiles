@@ -116,31 +116,27 @@ naughty.connect_signal("request::display", function(n)
                             margins = dpi(10),
                             widget = wibox.container.margin
                         },
-                        -- bg = "#282828",
+                        bg = dracula.current_line,
                         widget = wibox.widget.background
         
                     },
                     {
                         {
-        
                             { ----- Body/Message -----
                                 
                                 widget = naughty.widget.message,
                                 align = "left",
         
-                                -- font = "Poppins 15",
-                                -- text = n.message,
-        
-                                -- widget = wibox.widget.textbox
-        
                             },
-                            layout = wibox.layout.align.vertical
-                            -- expand = "none"
-        
+                            top = dpi(15),
+                            bottom = dpi(15),
+                            left = dpi(10),
+                            right = dpi(10),
+                            widget = wibox.container.margin,
+                            -- color = "#ffffff"
                         },
-        
-                        margins = dpi(10),
-                        widget = wibox.container.margin,
+                        widget = wibox.container.background,
+                        bg = dracula.background,
                     },
                     layout = wibox.layout.align.horizontal
                 },

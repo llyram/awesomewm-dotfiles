@@ -8,25 +8,31 @@ local gears = require("gears")
 
 local volume_icon = gears.filesystem.get_configuration_dir() .. "/awesome-wm-widgets/volume/headphones.svg"
 local GET_VOLUME_CMD = 'amixer sget Master'
+-- local GET = 
 
 
 local volume = {
-    vn = nil,
-    level = 50,
+    n = nil,
+    level = 0,
+    step = 5,
+    timeout = 2,
+    max = 120,
 }
 
 function volume.inc()
-    if volume.level < 100 then
-        volume.level = volume.level + 5
-        spawn.with_shell('amixer -D pulse sset Master ' .. tostring(volume.level) .. '%')
+    if volume.level < volume.max then
+        volume.level = volume.level + volume.step
+        -- spawn.with_shell('amixer -D pulse sset Master ' .. tostring(volume.level) .. '%')
+        spawn.with_shell('pactl -- set-sink-volume @DEFAULT_SINK@ ' .. tostring(volume.level) .. '%')
     end
     volume.notif()
 end
 
 function volume.dec()
     if volume.level > 0 then 
-        volume.level = volume.level - 5
-        spawn.with_shell('amixer -D pulse sset Master ' .. tostring(volume.level) .. '%')
+        volume.level = volume.level - volume.step
+        -- spawn.with_shell('amixer -D pulse sset Master ' .. tostring(volume.level) .. '%')
+        spawn.with_shell('pactl -- set-sink-volume @DEFAULT_SINK@ ' .. tostring(volume.level) .. '%')
     end
     volume.notif()
 end
@@ -37,28 +43,24 @@ function volume.toggle()
 end
 
 function volume.notif()
-    if volume.vn and not volume.vn.is_destroyed and not volume.vn.is_expired then
-        volume.vn.message = tostring(volume.level)
+    if volume.n and not volume.n.is_destroyed and not volume.n.is_expired then
+        volume.n.message = tostring(volume.level)
     else
-        volume.vn = naughty.notification {
+        volume.n = naughty.notification {
             text = tostring(volume.level),
             position = "top_left",
             icon = volume_icon,
             font = "Sans Regular 15",
-            title = "indicator"
+            title = "indicator",
+            timeout = volume.timeout,
         }
     end
 end
 
-spawn.easy_async("amixer -D pulse set Master 50%")
-
--- local function parse_output(stdout)
---     local level = string.match(stdout, "(%d?%d?%d)%%")
---     volume.level = tonumber(string.format("% 3d", level))
-
---     return level
--- end
-
+spawn.easy_async("/home/maryll/.config/awesome/awesome-wm-widgets/volume/getVolume.sh", function(stdout)
+    volume.level = tonumber(stdout)
+end)
+ 
 -- spawn.easy_async(GET_VOLUME_CMD, function(stdout)
 --     -- local level = string.match(stdout, "(%d?%d?%d)%%")
 --     volume.level = tonumber(string.match(stdout, "(%d?%d?%d)%%"))
