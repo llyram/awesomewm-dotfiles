@@ -6,7 +6,7 @@ local dpi = require('beautiful').xresources.apply_dpi
 local beautiful = require("beautiful")
 local gears = require("gears")
 
-local volume_icon = gears.filesystem.get_configuration_dir() .. "/awesome-wm-widgets/volume/headphones.svg"
+local volume_icon = gears.filesystem.get_configuration_dir() .. "/widgets/volume/headphones.svg"
 local GET_VOLUME_CMD = 'amixer sget Master'
 -- local GET = 
 
@@ -57,7 +57,7 @@ function volume.notif()
     end
 end
 
-spawn.easy_async("/home/maryll/.config/awesome/awesome-wm-widgets/volume/getVolume.sh", function(stdout)
+spawn.easy_async("/home/maryll/.config/awesome/widgets/volume/getVolume.sh", function(stdout)
     volume.level = tonumber(stdout)
 end)
  

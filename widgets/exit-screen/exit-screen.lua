@@ -3,11 +3,11 @@ local gears = require('gears')
 local wibox = require('wibox')
 local beautiful = require('beautiful')
 -- local icons = require('theme.icons')
-local clickable_container = require('awesome-wm-widgets.exit-screen.clickable-container')
+local clickable_container = require('widgets.exit-screen.clickable-container')
 -- local apps = require('configuration.apps')
 local dpi = require('beautiful').xresources.apply_dpi
 
-local dir = gears.filesystem.get_configuration_dir() .. "awesome-wm-widgets/exit-screen/"
+local dir = gears.filesystem.get_configuration_dir() .. "widgets/exit-screen/"
 local lock = dir .. "lock.svg"
 local logout = dir .. "logout.svg"
 local power = dir .. "power.svg"

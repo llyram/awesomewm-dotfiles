@@ -19,13 +19,13 @@ require("awful.hotkeys_popup.keys")
 apps = require("apps")
 
 -- Initialize widgets
-require("awesome-wm-widgets.exit-screen.exit-screen")
-local volume = require("awesome-wm-widgets.volume.volume")
+require("widgets.exit-screen.exit-screen")
+local volume = require("widgets.volume.volume")
 
 
-require("awesome-wm-widgets.brightness")
+-- require("widgets.brightness")
 
-local brightness = require("awesome-wm-widgets.brightness")
+local brightness = require("widgets.brightness.brightness")
 
 superkey = "Mod4"
 altkey = "Mod1"

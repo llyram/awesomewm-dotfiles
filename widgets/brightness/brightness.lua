@@ -13,7 +13,7 @@ local brightness = {
     timeout = 2,
 }
 
-brightness_icon = gears.filesystem.get_configuration_dir() .. "icons/sun.png"
+brightness_icon = gears.filesystem.get_configuration_dir() .. "widgets/brightness/sun.png"
 
 function brightness.inc()
     if brightness.level < 100 then

@@ -4,17 +4,18 @@ local watch = require("awful.widget.watch")
 local wibox = require("wibox")
 local gfs = require("gears.filesystem")
 local dpi = require('beautiful').xresources.apply_dpi
+local gears = require('gears')
 
 local HOME = os.getenv("HOME")
-local WIDGET_DIR = HOME .. '/.config/awesome/awesome-wm-widgets/battery-widget'
+local WIDGET_DIR = HOME .. '/.config/awesome/widgets/battery-widget'
 
 local battery_widget = {}
 
 local function worker(user_args)
     local args = user_args or {}
 
-    local path_to_icons = args.path_to_icons or
-                              "/usr/share/icons/Arc/status/symbolic/"
+    -- local path_to_icons = args.path_to_icons or "/usr/share/icons/Arc/status/symbolic/"
+    local path_to_icons = gears.filesystem.get_configuration_dir() .. "widgets/battery-widget/"
     local show_current_level = args.show_current_level or true
     local margin_left = args.margin_left or 5
     local margin_right = args.margin_right or 5

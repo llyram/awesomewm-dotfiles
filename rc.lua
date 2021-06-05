@@ -21,13 +21,13 @@ require("keys")
 require('module.notifications')
 
 -- Initializing widgets
-local battery_widget = require("awesome-wm-widgets.battery-widget.battery")
-require("awesome-wm-widgets.brightness")
+local battery_widget = require("widgets.battery-widget.battery")
+require("widgets.brightness.brightness")
 
-local cal = require("awesome-wm-widgets.calendar")
+local cal = require("widgets.calendar")
 
-local mytextclock = require("awesome-wm-widgets.textclock")
-local systray = require("awesome-wm-widgets.systray")
+local mytextclock = require("widgets.textclock")
+local systray = require("widgets.systray")
 
 
 -- {{{ Error handling
