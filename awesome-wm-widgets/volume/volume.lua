@@ -12,7 +12,7 @@ local GET_VOLUME_CMD = 'amixer sget Master'
 
 local volume = {
     vn = nil,
-    level = 0,
+    level = 50,
 }
 
 function volume.inc()
@@ -50,17 +50,19 @@ function volume.notif()
     end
 end
 
-local function parse_output(stdout)
-    local level = string.match(stdout, "(%d?%d?%d)%%")
-    volume.level = tonumber(string.format("% 3d", level))
+spawn.easy_async("amixer -D pulse set Master 50%")
 
-    return level
-end
+-- local function parse_output(stdout)
+--     local level = string.match(stdout, "(%d?%d?%d)%%")
+--     volume.level = tonumber(string.format("% 3d", level))
 
-spawn.easy_async(GET_VOLUME_CMD, function(stdout)
-    -- local level = string.match(stdout, "(%d?%d?%d)%%")
-    volume.level = tonumber(string.match(stdout, "(%d?%d?%d)%%"))
+--     return level
+-- end
+
+-- spawn.easy_async(GET_VOLUME_CMD, function(stdout)
+--     -- local level = string.match(stdout, "(%d?%d?%d)%%")
+--     volume.level = tonumber(string.match(stdout, "(%d?%d?%d)%%"))
     
-end)
+-- end)
 
 return volume

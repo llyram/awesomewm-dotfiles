@@ -156,7 +156,7 @@ theme.awesome_icon = theme_assets.awesome_icon(theme.menu_height,
 
 -- Define the icon theme for application icons. If not set then the icons
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.
-theme.icon_theme = '/usr/share/icons/gnome'
+theme.icon_theme = '/usr/share/icons/Arc'
 
 -- Set different colors for urgent notifications.
 rnotification.connect_signal('request::rules', function()
