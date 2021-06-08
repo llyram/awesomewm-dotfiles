@@ -50,4 +50,5 @@ spawn.easy_async("xbacklight", function(stdout)
     brightness.level = tonumber(string.match(stdout, "(%d+)%."))
 end)
 
+
 return brightness

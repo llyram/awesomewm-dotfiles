@@ -55,7 +55,7 @@ local function worker(user_args)
     --     layout = wibox.container.margin
     -- }
     local level_widget = wibox.widget {
-        font = "Roboto Bold",
+        font = "Poppins Bold 10",
         widget = wibox.widget.textbox
     }
 

@@ -117,7 +117,7 @@ awful.keyboard.append_global_keybindings(
             {description = "open file manager", group = "launcher"}),
         awful.key({superkey}, "r", 
             function()
-                awful.util.spawn("rofi -no-lazy-grab -show drun -theme centered.rasi")
+                awful.util.spawn("rofi -no-lazy-grab -show drun ")
             end, 
             {description = "run prompt", group = "launcher"}),
         awful.key({superkey}, "p", 

@@ -267,7 +267,7 @@ ruled.client.connect_signal("request::rules", function()
         id = "titlebars",
         rule_any = {
             type = {
-                "Wine", "dialog", "NetBeans IDE 8.2", "sun-awt-X11-XFramePeer"
+                "Wine", "NetBeans IDE 8.2", "sun-awt-X11-XFramePeer"
             }
         },
         properties = {titlebars_enabled = true}
@@ -289,13 +289,30 @@ ruled.client.connect_signal("request::rules", function()
     ruled.client.append_rule {
         id = "picture in picture",
         rule_any = {
-            class = {"pip"}
+            name = {"Picture in picture"}
         },
         properties = {
             ontop = true,
             floating = true,
         }
     }
+
+    -- ruled.client.append_rule {
+    --     id = "csTimer",
+    --     rule_any = {
+    --         role = { "pop-up" }
+    --     },
+    --     except_any = {
+    --         class = {"crx_peoigcfhkflakdcipcclkneidghaaphd"},
+    --         name = {""}
+
+    --     },
+    --     properties = {
+    --         -- ontop = true,
+    --         floating = true,
+    --     }
+    -- }
+
 
     -- Floating clients.
     ruled.client.append_rule {
@@ -308,19 +325,24 @@ ruled.client.connect_signal("request::rules", function()
             class = {
                 "Arandr", "Blueman-manager", "Gpick", "Kruler", "Sxiv",
                 "Tor Browser", "Wpa_gui", "veromix", "xtightvncviewer", "Wine",
-                "CPU Simulator"
+                "CPU Simulator", "pip"
             },
             -- Note that the name property shown in xprop might be set slightly after creation of the client
             -- and the name shown thfloatingere might not match defined rules here.
             name = {
-                "Event Tester" -- xev.
+                "Event Tester", -- xev.
+                -- "Picture in picture"
             },
             role = {
                 "AlarmWindow", -- Thunderbird's calendar.
                 "ConfigManager", -- Thunderbird's about:config.
-                -- "pop-up" -- e.g. Google Chrome's (detached) Developer Tools.
+                "pop-up" -- e.g. Google Chrome's (detached) Developer Tools.
             }
         },
+        -- except_any = {
+        --     class = {"crx_peoigcfhkflakdcipcclkneidghaaphd"},
+        --     name = {"csTimer - Professional Rubik's Cube Speedsolving/Training Timer"}
+        -- },
         properties = {floating = true}
     }
 
@@ -395,9 +417,9 @@ end)
 
 -- Autostart
 awful.spawn.with_shell("compton")
-awful.spawn.with_shell('setxkbmap -layout "us"')
 awful.util.spawn("nm-applet --indicator")
 awful.util.spawn("kdeconnect-indicator")
 awful.util.spawn("blueman-applet")
 awful.util.spawn("xfce4-power-manager")
+awful.util.spawn("/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &")
 -- awful.util.spawn("redshift-gtk -l 20.5937:78.9629 -t 6500:3400")

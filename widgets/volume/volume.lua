@@ -22,7 +22,6 @@ local volume = {
 function volume.inc()
     if volume.level < volume.max then
         volume.level = volume.level + volume.step
-        -- spawn.with_shell('amixer -D pulse sset Master ' .. tostring(volume.level) .. '%')
         spawn.with_shell('pactl -- set-sink-volume @DEFAULT_SINK@ ' .. tostring(volume.level) .. '%')
     end
     volume.notif()
@@ -31,7 +30,6 @@ end
 function volume.dec()
     if volume.level > 0 then 
         volume.level = volume.level - volume.step
-        -- spawn.with_shell('amixer -D pulse sset Master ' .. tostring(volume.level) .. '%')
         spawn.with_shell('pactl -- set-sink-volume @DEFAULT_SINK@ ' .. tostring(volume.level) .. '%')
     end
     volume.notif()
@@ -57,14 +55,12 @@ function volume.notif()
     end
 end
 
-spawn.easy_async("/home/maryll/.config/awesome/widgets/volume/getVolume.sh", function(stdout)
-    volume.level = tonumber(stdout)
-end)
- 
--- spawn.easy_async(GET_VOLUME_CMD, function(stdout)
---     -- local level = string.match(stdout, "(%d?%d?%d)%%")
---     volume.level = tonumber(string.match(stdout, "(%d?%d?%d)%%"))
-    
--- end)
+function getVolume()
+    spawn.easy_async("/home/maryll/.config/awesome/widgets/volume/getVolume.sh", function(stdout)
+        volume.level = tonumber(stdout)
+    end)
+end
+
+getVolume()
 
 return volume
