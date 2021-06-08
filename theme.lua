@@ -34,7 +34,7 @@ theme.fg_minimize = theme.fg_normal
 
 theme.useless_gap = dpi(3)
 theme.gap_single_client = true
-theme.border_width = dpi(2)
+theme.border_width = dpi(1)
 theme.border_color_normal = gruvbox.bg0
 theme.border_color_active = dracula.purple
 -- theme.border_color_marked = gruvbox.red
