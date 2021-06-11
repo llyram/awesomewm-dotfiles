@@ -184,7 +184,7 @@ local function worker(user_args)
         end)
     elseif display_notification_onClick then
         battery_widget:connect_signal("button::press", function(_, _, _, button)
-            if (button == 3) then show_battery_status(batteryType) end
+            if (button == 1) then show_battery_status(batteryType) end
         end)
         battery_widget:connect_signal("mouse::leave", function()
             naughty.destroy(notification)

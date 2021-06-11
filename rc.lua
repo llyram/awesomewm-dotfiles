@@ -11,6 +11,7 @@ local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
 require("awful.hotkeys_popup.keys")
 local dpi = require("beautiful.xresources").apply_dpi
+-- awful.util.shell = "fish"
 
 
 -- Mouse and Keybindings
@@ -45,7 +46,7 @@ end)
 
 -- {{{ Variable definitions
 -- fs define colours, icons, font and wallpapers.
-beautiful.init(require("theme"))
+beautiful.init(require("theme.theme"))
 
 beautiful.notification_max_width = dpi(400)
 beautiful.notification_max_height = dpi(150)
@@ -287,31 +288,15 @@ ruled.client.connect_signal("request::rules", function()
     }
 
     ruled.client.append_rule {
-        id = "picture in picture",
+        id = "Picture in picture",
         rule_any = {
-            name = {"Picture in picture"}
+            name = {"Picture-in-picture"}
         },
         properties = {
             ontop = true,
             floating = true,
         }
     }
-
-    -- ruled.client.append_rule {
-    --     id = "csTimer",
-    --     rule_any = {
-    --         role = { "pop-up" }
-    --     },
-    --     except_any = {
-    --         class = {"crx_peoigcfhkflakdcipcclkneidghaaphd"},
-    --         name = {""}
-
-    --     },
-    --     properties = {
-    --         -- ontop = true,
-    --         floating = true,
-    --     }
-    -- }
 
 
     -- Floating clients.
@@ -325,7 +310,7 @@ ruled.client.connect_signal("request::rules", function()
             class = {
                 "Arandr", "Blueman-manager", "Gpick", "Kruler", "Sxiv",
                 "Tor Browser", "Wpa_gui", "veromix", "xtightvncviewer", "Wine",
-                "CPU Simulator", "pip"
+                "CPU Simulator"
             },
             -- Note that the name property shown in xprop might be set slightly after creation of the client
             -- and the name shown thfloatingere might not match defined rules here.
@@ -362,7 +347,7 @@ client.connect_signal("request::titlebars", function(c)
         end)
     }
 
-    awful.titlebar(c).widget = {
+    awful.titlebar(c,{font = "Open Sans 7", size = dpi(25)}).widget = {
         { -- Left
             -- awful.titlebar.widget.iconwidget(c),
             -- buttons = buttons,
@@ -378,9 +363,9 @@ client.connect_signal("request::titlebars", function(c)
         },
         { -- Right
             awful.titlebar.widget.floatingbutton(c),
-            awful.titlebar.widget.maximizedbutton(c),
             awful.titlebar.widget.stickybutton(c),
             awful.titlebar.widget.ontopbutton(c),
+            awful.titlebar.widget.maximizedbutton(c),
             awful.titlebar.widget.closebutton(c),
             layout = wibox.layout.fixed.horizontal()
         },

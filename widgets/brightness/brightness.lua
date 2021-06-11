@@ -40,7 +40,7 @@ function notif()
             position = "top_left",
             timeout = brightness.timeout,
             icon = brightness_icon,
-            font = "Sans Regular 15",
+            font = "Open Sans Bold 15",
             title = "indicator",
         }
     end
