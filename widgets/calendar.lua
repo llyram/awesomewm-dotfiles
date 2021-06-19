@@ -6,7 +6,9 @@ local beautiful = require('beautiful')
 -- local clickable_container = require('widget.material.clickable-container')
 local dpi = require('beautiful').xresources.apply_dpi
 
-require("colors")
+require("theme.colors")
+
+awesome.register_xproperty("WM_CLASS","string")
 
 local styles = {}
 local function rounded_shape(size, partial)
@@ -21,7 +23,7 @@ local function rounded_shape(size, partial)
     end
 end
 styles.month = {padding = 5, bg_color = '#555555', shape = rounded_shape(10)}
-styles.normal = {shape = rounded_shape(5)}
+-- styles.normal = {shape = rounded_shape(5)}
 styles.focus = {
     fg_color = "#ffb86c", -- Current day Color
     markup = function(t) return '<b>' .. t .. '</b>' end,
@@ -87,12 +89,13 @@ local popup = awful.popup {
     ontop = true,
     visible = false,
     position = "top_left",
-    shape = gears.shape.rounded_rect,
+    -- shape = gears.shape.rounded_rect,
     offset = { y = 5},
     border_width = 1,
     border_color = "#282828",
     widget = calWidget
 }
+popup:set_xproperty("WM_CLASS", "calendar")
 
 popup:buttons(
         awful.util.table.join(

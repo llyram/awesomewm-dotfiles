@@ -8,6 +8,7 @@ My config files for awesomewm
 
 ## Screenshots
 ![home](screenshots/home.png)
+![editor](screenshots/editor.png)
 ![terminals](screenshots/terminals.png)
 
 ## Usage:

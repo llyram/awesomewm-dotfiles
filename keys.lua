@@ -81,6 +81,16 @@ awful.keyboard.append_global_keybindings(
             end, 
             {description = "decrease brightness", group = "custom"}),
         -- brightness keys end
+        -- Media Keys
+        awful.key({}, "XF86AudioPlay", function()
+            awful.util.spawn("playerctl play-pause", false)
+        end),
+        awful.key({}, "XF86AudioNext", function()
+            awful.util.spawn("playerctl next", false)
+        end),
+        awful.key({}, "XF86AudioPrev", function()
+            awful.util.spawn("playerctl previous", false)
+        end),
         awful.key({superkey}, "s", 
             hotkeys_popup.show_help,
             {description = "show help", group = "awesome"}),
@@ -132,7 +142,7 @@ awful.keyboard.append_global_keybindings(
             {description = "open a browser", group = "launcher"}),
         awful.key({superkey}, "c",
             function()
-                awful.spawn("/usr/lib/brave-bin/brave --profile-directory=Default --app-id=crx_peoigcfhkflakdcipcclkneidghaaphd", {floating = false})
+                awful.spawn("/usr/lib/brave/brave --profile-directory=Default --app-id=peoigcfhkflakdcipcclkneidghaaphd", {tiled = true})
             end,
             {description = "open csTimer", group = "launcher"})
     })
@@ -324,7 +334,7 @@ client.connect_signal("request::default_keybindings", function()
                       {description = "close", group = "client"}),
             awful.key({superkey, "Control"}, "space", function(c)
                 awful.client.floating.toggle(c)
-                c.ontop = not c.ontop
+                -- c.ontop = not c.ontop
             end, {description = "toggle floating", group = "client"}),
             awful.key({superkey, "Shift"}, "t", awful.titlebar.toggle),
             awful.key({superkey, "Control"}, "Return",

@@ -11,24 +11,23 @@ local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
 require("awful.hotkeys_popup.keys")
 local dpi = require("beautiful.xresources").apply_dpi
--- awful.util.shell = "fish"
 
+awesome.register_xproperty("WM_CLASS","string")
 
 -- Mouse and Keybindings
 require("keys")
-
+modkey = "Mod4"
 
 -- Initializing modules
 require('module.notifications')
 
 -- Initializing widgets
 local battery_widget = require("widgets.battery-widget.battery")
-require("widgets.brightness.brightness")
-
 local cal = require("widgets.calendar")
-
 local mytextclock = require("widgets.textclock")
 local systray = require("widgets.systray")
+require("widgets.dock")
+require("widgets.desktopClock")
 
 
 -- {{{ Error handling
@@ -119,8 +118,7 @@ end)
 
 screen.connect_signal("request::desktop_decoration", function(s)
      -- Each screen has its own tag table.
-     awful.tag({"  ", "  ", "  ", "  ", "  "}, s,
-               awful.layout.layouts[1])
+     awful.tag({"  ", "  ", "  ", " 奈 ", "  "}, s, awful.layout.layouts[1])
 
      -- Create a promptbox for each screen
      s.mypromptbox = awful.widget.prompt()
@@ -137,26 +135,44 @@ screen.connect_signal("request::desktop_decoration", function(s)
          }
      }
 
-     -- Create a taglist widget
+    -- Create a taglist widget
      s.mytaglist = awful.widget.taglist {
-         screen = s,
-         spacing = dpi(0),
-         filter = awful.widget.taglist.filter.all,
-         buttons = {
-             awful.button({}, 1, function(t) t:view_only() end),
-             awful.button({modkey}, 1, function(t)
-                 if client.focus then client.focus:move_to_tag(t) end
-             end), awful.button({}, 3, awful.tag.viewtoggle),
-             awful.button({modkey}, 3, function(t)
-                 if client.focus then client.focus:toggle_tag(t) end
-             end),
-             awful.button({}, 4, function(t)
-                 awful.tag.viewprev(t.screen)
-             end),
-             awful.button({}, 5, function(t)
-                 awful.tag.viewnext(t.screen)
-             end)
-        }
+        screen = s,
+        spacing = 10,
+        filter = awful.widget.taglist.filter.all,
+        style = {
+            bg_focus = beautiful.bg_normal
+        },
+        buttons = {
+            awful.button({}, 1, function(t) t:view_only() end),
+            awful.button({modkey}, 1, function(t)
+                if client.focus then client.focus:move_to_tag(t) end
+            end), 
+            awful.button({}, 3, awful.tag.viewtoggle),
+            awful.button({modkey}, 3, function(t)
+                if client.focus then client.focus:toggle_tag(t) end
+            end),
+            awful.button({}, 4, function(t)
+                awful.tag.viewprev(t.screen)
+            end),
+            awful.button({}, 5, function(t)
+                awful.tag.viewnext(t.screen)
+            end)
+        },
+        widget_template = {
+            {
+                {
+                    id     = 'text_role',
+                    widget = wibox.widget.textbox,
+                    -- forced_width = 17
+                },
+                left  = -5,
+                right = -5,
+                widget = wibox.container.margin
+            },
+            id     = 'background_role',
+            widget = wibox.container.background,
+        },
     }
 
     -- Create a tasklist widget
@@ -214,6 +230,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
 
     -- Create the wibox
     s.mywibox = awful.wibar({position = "top", screen = s, height = dpi(30)})
+    -- s.mywibox:set_xproperty("WM_NAME", "wibar")
 
     -- Add widgets to the wibox
     s.mywibox.widget = {
@@ -226,6 +243,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
             s.mypromptbox,
         },
         s.mytasklist, -- Middle widget
+        -- nil,
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             spacing = -16,
@@ -298,6 +316,20 @@ ruled.client.connect_signal("request::rules", function()
         }
     }
 
+    ruled.client.append_rule {
+        id = "plank",
+        rule_any = {
+            class = {"Plank"}
+        },
+        properties = {
+            border_width = 0,
+            -- ontop = true,
+            focusable = false,
+            below = false,
+            floating = true,
+        }
+    }
+
 
     -- Floating clients.
     ruled.client.append_rule {
@@ -324,10 +356,10 @@ ruled.client.connect_signal("request::rules", function()
                 "pop-up" -- e.g. Google Chrome's (detached) Developer Tools.
             }
         },
-        -- except_any = {
-        --     class = {"crx_peoigcfhkflakdcipcclkneidghaaphd"},
-        --     name = {"csTimer - Professional Rubik's Cube Speedsolving/Training Timer"}
-        -- },
+        except_any = {
+            class = {"crx_peoigcfhkflakdcipcclkneidghaaphd"},
+            -- name = {"csTimer - Professional Rubik's Cube Speedsolving/Training Timer"}
+        },
         properties = {floating = true}
     }
 
@@ -408,3 +440,5 @@ awful.util.spawn("blueman-applet")
 awful.util.spawn("xfce4-power-manager")
 awful.util.spawn("/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &")
 -- awful.util.spawn("redshift-gtk -l 20.5937:78.9629 -t 6500:3400")
+
+

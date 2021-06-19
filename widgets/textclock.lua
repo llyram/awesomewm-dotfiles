@@ -1,14 +1,13 @@
 local wibox = require("wibox")
 local dpi = require("beautiful.xresources").apply_dpi
-require("colors")
+require("theme.colors")
 local gears = require("gears")
 
 -- Create a textclock widget
 mytextclock = wibox.widget {
       {
           {
-              widget = wibox.widget.textclock(
-                  '<span font="Poppins Bold 10">%a %b %d, %H:%M </span>', 5)
+              widget = wibox.widget.textclock('<span font="Poppins Bold 10">%a %b %d, %H:%M </span>', 5)
           },
           widget = wibox.container.margin,
           left = dpi(20),
@@ -23,27 +22,27 @@ mytextclock = wibox.widget {
 }
 local old_cursor, old_wibox
 mytextclock:connect_signal(
-    'mouse::enter',
-    function()
-    --   mytextclock.bg = '#ffffff11'
-      -- Hm, no idea how to get the wibox from this signal's arguments...
-      local w = _G.mouse.current_wibox
-      if w then
-        old_cursor, old_wibox = w.cursor, w
-        w.cursor = 'hand1'
-      end
+  'mouse::enter',
+  function()
+  -- mytextclock.bg = '#ffffff11'
+    -- Hm, no idea how to get the wibox from this signal's arguments...
+    local w = _G.mouse.current_wibox
+    if w then
+      old_cursor, old_wibox = w.cursor, w
+      w.cursor = 'hand1'
     end
-  )
+  end
+)
 
-  mytextclock:connect_signal(
-    'mouse::leave',
-    function()
-    --   mytextclock.bg = '#ffffff00'
-      if old_wibox then
-        old_wibox.cursor = old_cursor
-        old_wibox = nil
-      end
+mytextclock:connect_signal(
+  'mouse::leave',
+  function()
+  --   mytextclock.bg = '#ffffff00'
+    if old_wibox then
+      old_wibox.cursor = old_cursor
+      old_wibox = nil
     end
-  )
+  end
+)
 
 return mytextclock

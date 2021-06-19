@@ -7,12 +7,12 @@ local gfs = require("gears.filesystem")
 local themes_path = gfs.get_themes_dir()
 local gears = require("gears")
 local tip = gears.filesystem.get_configuration_dir() .. "/theme/titlebar/"
-require("colors")
+require("theme.colors")
 
 local theme = {}
 
 theme.font = "Poppins Regular 10"
-theme.taglist_font = "18"
+theme.taglist_font = "MesloLGS NF 18"
 
 
 -- theme.tasklist_plain_task_name = false
@@ -35,8 +35,8 @@ theme.fg_urgent = gruvbox.red
 theme.fg_minimize = theme.fg_normal
 
 theme.useless_gap = dpi(3)
-theme.gap_single_client = false
-theme.border_width = dpi(1)
+theme.gap_single_client = true
+theme.border_width = dpi(2)
 theme.border_color_normal = "#000000"
 theme.border_color_active = dracula.purple
 -- theme.border_color_marked = gruvbox.red
