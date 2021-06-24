@@ -26,7 +26,7 @@ local battery_widget = require("widgets.battery-widget.battery")
 local cal = require("widgets.calendar")
 local mytextclock = require("widgets.textclock")
 local systray = require("widgets.systray")
-require("widgets.dock")
+require("widgets.dock.dock")
 require("widgets.desktopClock")
 
 
@@ -222,14 +222,27 @@ screen.connect_signal("request::desktop_decoration", function(s)
                 widget = wibox.container.margin,
             },
             id = 'background_role',
-            widget = wibox.container.background
+            widget = wibox.container.background,
+            create_callback = function(self, c, index, objects)
+                local tooltip = awful.tooltip({
+                  objects = { self },
+                  timer_function = function()
+                    return c.name
+                  end,
+                })
+              
+                -- Then you can set tooltip props if required
+                tooltip.align = "left"
+                tooltip.mode = "outside"
+                tooltip.preferred_positions = {"left"}
+              end,
 
         }
     }
 
 
     -- Create the wibox
-    s.mywibox = awful.wibar({position = "top", screen = s, height = dpi(30)})
+    s.mywibox = awful.wibar({position = "top", screen = s, height = dpi(27)})
     -- s.mywibox:set_xproperty("WM_NAME", "wibar")
 
     -- Add widgets to the wibox
@@ -238,12 +251,12 @@ screen.connect_signal("request::desktop_decoration", function(s)
         -- expand = "none",
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
-            wibox.container.background(wibox.layout.margin(s.mylayoutbox, dpi(5), 5, 5, 5), gruvbox.blue),
+            wibox.container.background(wibox.layout.margin(s.mylayoutbox, dpi(5), 5, 5, 5), nord.nord3),
             s.mytaglist,
             s.mypromptbox,
         },
-        s.mytasklist, -- Middle widget
-        -- nil,
+        -- s.mytasklist, -- Middle widget
+        nil,
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             spacing = -16,
@@ -255,7 +268,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
                     right = dpi(15),
                 },
                 widget = wibox.container.background,
-                bg = gruvbox.blue,
+                bg = nord.nord1,
                 shape = function(cr, width, height)
                     gears.shape.powerline(cr, width, height, -15)
                 end,
@@ -265,7 +278,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
             wibox.widget{
                 wibox.layout.margin(require('notif-center'), 10, 2, 2, 2),
                 widget = wibox.container.background,
-                bg = gruvbox.aqua,
+                bg = "#6c768a",
                 shape = function(cr, width, height)
                     gears.shape.rectangular_tag(cr, width, height, 15)
                 end,

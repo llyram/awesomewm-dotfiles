@@ -15,7 +15,7 @@ mysystray = wibox.widget {
         right = dpi(15),
     },
     widget = wibox.container.background,
-    bg = gruvbox.red,
+    bg = nord.nord2,
     shape = function(cr, width, height)
         gears.shape.powerline(cr, width, height, -15)
     end,

@@ -7,6 +7,7 @@ local beautiful = require('beautiful')
 local dpi = require('beautiful').xresources.apply_dpi
 
 require("theme.colors")
+beautiful.init(require("theme.theme"))
 
 awesome.register_xproperty("WM_CLASS","string")
 
@@ -25,7 +26,7 @@ end
 styles.month = {padding = 5, bg_color = '#555555', shape = rounded_shape(10)}
 -- styles.normal = {shape = rounded_shape(5)}
 styles.focus = {
-    fg_color = "#ffb86c", -- Current day Color
+    fg_color = nord.nord12, -- Current day Color
     markup = function(t) return '<b>' .. t .. '</b>' end,
     shape = rounded_shape(5, true)
 }
@@ -81,7 +82,7 @@ local calWidget = wibox.widget {
         layout = wibox.layout.flex.horizontal
     },
     resize = true,
-    bg = gruvbox.bg0_h,
+    bg = beautiful.bg_normal,
     widget = wibox.container.background
 }
 
@@ -104,14 +105,14 @@ popup:buttons(
                     a.month = a.month + 1
                     cal:set_date(nil)
                     cal:set_date(a)
-                    popup:set_widget(cal)
+                    popup:set_widget(calWidget)
                 end),
                 awful.button({}, 5, function()
                     local a = cal:get_date()
                     a.month = a.month - 1
                     cal:set_date(nil)
                     cal:set_date(a)
-                    popup:set_widget(cal)
+                    popup:set_widget(calWidget)
                 end)
         )
 )

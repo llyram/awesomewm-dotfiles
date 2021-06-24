@@ -94,11 +94,12 @@ awful.keyboard.append_global_keybindings(
         awful.key({superkey}, "s", 
             hotkeys_popup.show_help,
             {description = "show help", group = "awesome"}),
-        awful.key({superkey}, "w", 
-            function() 
-                mymainmenu:show() 
-            end,
-            {description = "show main menu", group = "awesome"}),
+        -- awful.key({superkey,}, "w", 
+        --     function(c) 
+        --         -- mymainmenu:show() 
+        --         c.maximized = not c.maximized
+        --     end,
+        --     {description = "show main menu", group = "awesome"}),
         awful.key({superkey, "Control"}, "r", 
             awesome.restart,
             {description = "reload awesome", group = "awesome"}),
@@ -127,9 +128,9 @@ awful.keyboard.append_global_keybindings(
             {description = "open file manager", group = "launcher"}),
         awful.key({superkey}, "r", 
             function()
-                awful.util.spawn("rofi -no-lazy-grab -show drun ")
+                awful.util.spawn("/home/maryll/.config/rofi/bin/launcher_ribbon")
             end, 
-            {description = "run prompt", group = "launcher"}),
+            {description = "rofi run prompt", group = "launcher"}),
         awful.key({superkey}, "p", 
             function() 
                 menubar.show() 
@@ -326,6 +327,13 @@ end)
 client.connect_signal("request::default_keybindings", function()
     awful.keyboard.append_client_keybindings(
         {
+            -- awful.key({superkey,}, "w", 
+            -- function(c) 
+            --     -- mymainmenu:show() 
+            --     c.fullscreen = not c.fullscreen
+            --     c:raise()
+            -- end,
+            -- {description = "show main menu", group = "awesome"}),
             awful.key({superkey, "Shift"}, "f", function(c)
                 c.fullscreen = not c.fullscreen
                 c:raise()
@@ -366,3 +374,4 @@ client.connect_signal("request::default_keybindings", function()
 end)
 
 -- }}}
+

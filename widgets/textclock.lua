@@ -15,7 +15,7 @@ mytextclock = wibox.widget {
           -- color = "#ffffff",
       },
       widget = wibox.container.background,
-      bg = gruvbox.yellow,
+      bg = nord.nord3,
       shape = function(cr, width, height)
           gears.shape.powerline(cr, width, height, -15)
       end,

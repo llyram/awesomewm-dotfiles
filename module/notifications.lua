@@ -67,7 +67,7 @@ naughty.connect_signal("request::display", function(n)
                 {
                     {
                         id = 'text_role',
-                        -- font = beautiful.notification_font,
+                        -- font = beautiful.font .. "6",
                         widget = wibox.widget.textbox
                     },
                     left = dpi(6),
@@ -78,7 +78,7 @@ naughty.connect_signal("request::display", function(n)
             },
             bg = "#000000",
             forced_height = dpi(25),
-            forced_width = dpi(70),
+            forced_width = dpi(50),
             widget = wibox.container.background,
             shape = gears.shape.rounded_rect,
         },
@@ -170,8 +170,8 @@ naughty.connect_signal("request::display", function(n)
                                     widget = naughty.widget.icon
                                 },
                                 widget = wibox.container.constraint,
-                                width = dpi(30),
-                                height = dpi(30),
+                                width = dpi(48),
+                                height = dpi(48),
                             },
                             margins = dpi(10),
                             widget = wibox.container.margin
@@ -215,7 +215,9 @@ naughty.connect_signal("request::display", function(n)
         
                 strategy = "max",
                 height = dpi(180),
+                -- forced_height = 100,
                 width = dpi(400),
+                -- forced_width = 400,
                 widget = wibox.container.constraint
             },
         }

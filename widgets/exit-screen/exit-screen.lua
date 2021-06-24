@@ -47,14 +47,14 @@ end
 
 function suspend_command()
   exit_screen_hide()
-  awful.spawn.with_shell('i3lock-fancy && systemctl suspend')
+  awful.spawn.with_shell('dm-tool switch-to-greeter && systemctl suspend')
 end
 function exit_command()
   _G.awesome.quit()
 end
 function lock_command()
   exit_screen_hide()
-  awful.spawn.with_shell('sleep 1 && i3lock-fancy' )
+  awful.spawn.with_shell('dm-tool lock' )
 end
 function poweroff_command()
   awful.spawn.with_shell('poweroff')

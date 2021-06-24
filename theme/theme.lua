@@ -11,34 +11,40 @@ require("theme.colors")
 
 local theme = {}
 
+-- fonts
 theme.font = "Poppins Regular 10"
 theme.taglist_font = "MesloLGS NF 18"
 
-
--- theme.tasklist_plain_task_name = false
--- theme.tasklist_disable_task_name = true
-
-theme.bg_normal = gruvbox.bg0_h
--- theme.bg_focus = gruvbox.bg0
+-- background
+theme.bg_normal = nord.nord0
 theme.bg_focus = "#ffffff" .. 15
 -- theme.bg_urgent = theme.bg_normal
 theme.bg_minimize = theme.bg_normal
-theme.titlebar_bg_focus = gruvbox.bg0
-theme.titlebar_bg_normal = theme.bg_normal
-theme.titlebar_fg_focus = gruvbox.fg0
-theme.systray_icon_spacing = dpi(2)
-theme.bg_systray = gruvbox.red
 
-theme.fg_normal = gruvbox.fg0
-theme.fg_focus = gruvbox.aqua
-theme.fg_urgent = gruvbox.red
+-- foreground
+theme.fg_normal = nord.nord6
+theme.fg_focus = nord.nord8
+theme.fg_urgent = nord.nord11
 theme.fg_minimize = theme.fg_normal
 
+-- titlebar
+theme.titlebar_bg_focus = theme.bg_normal
+theme.titlebar_bg_normal = nord.nord1
+theme.titlebar_fg_normal = theme.fg_normal .. "50"
+theme.titlebar_fg_focus = theme.fg_normal
+
+-- systray
+theme.systray_icon_spacing = dpi(2)
+theme.bg_systray = nord.nord2
+
+-- gaps
 theme.useless_gap = dpi(3)
 theme.gap_single_client = true
+
+-- borders
 theme.border_width = dpi(2)
 theme.border_color_normal = "#000000"
-theme.border_color_active = dracula.purple
+theme.border_color_active = dracula.comment
 -- theme.border_color_marked = gruvbox.red
 theme.maximized_hide_border = true
 theme.border_single_client = false
@@ -60,10 +66,8 @@ theme.tasklist_fg_focus = theme.fg_normal
 
 -- Generate taglist squares:
 local taglist_square_size = dpi(4)
-theme.taglist_squares_sel = theme_assets.taglist_squares_sel(
-                                taglist_square_size, theme.fg_normal)
-theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
-                                  taglist_square_size, theme.fg_normal)
+theme.taglist_squares_sel = theme_assets.taglist_squares_sel(taglist_square_size, theme.fg_normal)
+theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(taglist_square_size, theme.fg_normal)
 
 -- Variables set for theming notifications:
 theme.notification_font = theme.font 
@@ -180,8 +184,7 @@ theme.layout_cornersw = themes_path .. "default/layouts/cornersww.png"
 theme.layout_cornerse = themes_path .. "default/layouts/cornersew.png"
 
 -- Generate Awesome icon:
-theme.awesome_icon = theme_assets.awesome_icon(theme.menu_height,
-                                               theme.bg_focus, theme.fg_focus)
+theme.awesome_icon = theme_assets.awesome_icon(theme.menu_height,theme.bg_focus, theme.fg_focus)
 
 -- Define the icon theme for application icons. If not set then the icons
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.
