@@ -3,7 +3,7 @@ My config files for awesomewm
 
 - WM : AwesomeWM
 - Terminal : Alacritty
-- Theme : Gruvbox
+- Theme : Nord
 - Wallpaper : [here](https://github.com/Maryll-castelino/Wallpapers/blob/master/cool-mountains.jpg)
 
 ## Screenshots
