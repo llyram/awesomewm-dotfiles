@@ -38,7 +38,7 @@ local tasklist = awful.widget.tasklist {
     layout   = {
         spacing = 5,
         -- forced_num_rows = 1,
-        layout = wibox.layout.grid.horizontal
+        layout = wibox.layout.grid.vertical
     },
     widget_template = {
         {
@@ -53,26 +53,26 @@ local tasklist = awful.widget.tasklist {
         forced_width    = 48,
         forced_height   = 48,
         widget          = wibox.container.background,
-        create_callback = function(self, c, index, objects)
-            local tooltip = awful.tooltip({
-                objects = { self },
-                timer_function = function()
-                return c.name
-                end,
-            })
+        -- create_callback = function(self, c, index, objects)
+        --     local tooltip = awful.tooltip({
+        --         objects = { self },
+        --         timer_function = function()
+        --         return c.name
+        --         end,
+        --     })
             
-            -- Then you can set tooltip props if required
-            tooltip.align = "left"
-            tooltip.mode = "outside"
-            tooltip.preferred_positions = {"left"}
-        end,
+        --     -- Then you can set tooltip props if required
+        --     tooltip.align = "left"
+        --     tooltip.mode = "outside"
+        --     tooltip.preferred_positions = {"left"}
+        -- end,
     },
 }
 
 local separator = wibox.widget {
     widget = wibox.widget.separator,
     forced_height = 48,
-    orientation = "vertical",
+    orientation = "horizontal",
     forced_width = 20,
 }
 
@@ -99,12 +99,12 @@ app_drawer:connect_signal('button::press',
 
 dock = awful.popup {
     widget = {
-        {
-            app_drawer,
-            separator,
+        -- {
+        --     app_drawer,
+        --     separator,
             tasklist,
-            layout = wibox.layout.fixed.horizontal,
-        },
+        --     layout = wibox.layout.fixed.vertical,
+        -- },
         widget = wibox.container.margin,
         margins = 5,
     },
@@ -112,7 +112,7 @@ dock = awful.popup {
     border_width = 1,
     bg = nord.nord0,
     ontop        = true,
-    placement    = awful.placement.bottom,
+    placement    = awful.placement.left,
     visible = false,
 }
 
@@ -130,14 +130,14 @@ end
 
 local dock_activator = wibox({
     visible = true,
-    width = dock.width + dpi(250),
-    height = 1,
+    height = dock.height + dpi(250),
+    width = 1,
     bg = "#ffffff00",
     -- below = true,
     ontop = true,
 })
 
-awful.placement.bottom(dock_activator)
+awful.placement.left(dock_activator)
 dock_activator:connect_signal('mouse::enter', 
     function()
         dock.visible = true

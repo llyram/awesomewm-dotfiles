@@ -1,2 +1,3 @@
-/layout
-/awesome-switcher
+/awesome-AnimationFramework
+widgets/dock/
+/widgets/animationwidget.lua

@@ -12,6 +12,7 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 require("awful.hotkeys_popup.keys")
 local dpi = require("beautiful.xresources").apply_dpi
 
+
 awesome.register_xproperty("WM_CLASS","string")
 
 -- Mouse and Keybindings
@@ -26,9 +27,8 @@ local battery_widget = require("widgets.battery-widget.battery")
 local cal = require("widgets.calendar")
 local mytextclock = require("widgets.textclock")
 local systray = require("widgets.systray")
-require("widgets.dock.dock")
-require("widgets.desktopClock")
-
+-- require("widgets.dock.dock")
+-- local animationwidget = require("widgets.animationwidget")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -47,8 +47,8 @@ end)
 -- fs define colours, icons, font and wallpapers.
 beautiful.init(require("theme.theme"))
 
-beautiful.notification_max_width = dpi(400)
-beautiful.notification_max_height = dpi(150)
+-- beautiful.notification_max_width = dpi(400)
+-- beautiful.notification_max_height = dpi(150)
 
 -- This is used later as the default terminal and editor to run.
 -- require("apps")
@@ -192,10 +192,15 @@ screen.connect_signal("request::desktop_decoration", function(s)
                 awful.client.focus.byidx(1)
             end)
         },
+        style = {
+            shape = function(cr, width, height)
+                gears.shape.parallelogram(cr, width, height, width-15)
+            end,
+        },
         layout = {
-            spacing = 0,
+            spacing = -10,
             layout = wibox.layout.flex.horizontal,
-            max_widget_size = dpi(250)
+            max_widget_size = 250,
         },
         -- Notice that there is *NO* wibox.wibox prefix, it is a template,
         -- not a widget instance.
@@ -203,40 +208,31 @@ screen.connect_signal("request::desktop_decoration", function(s)
             {
                 {
                     {
-                        {
-                            {id = 'icon_role', widget = wibox.widget.imagebox},
-                            margins = dpi(4),
-                            widget = wibox.container.margin
-                        },
-                        {id = 'text_role', widget = wibox.widget.textbox},
-                        layout = wibox.layout.fixed.horizontal
-                        -- max_widget_size = 200
+                        -- {
+                            {
+                                {id = 'icon_role', widget = wibox.widget.imagebox},
+                                margins = 1,
+                                widget = wibox.container.margin
+                            },
+                            {id = 'text_role', widget = wibox.widget.textbox},
+                            layout = wibox.layout.fixed.horizontal,
+                            max_widget_size = 200,
+                        -- },
+                        -- widget = wibox.container.constraint,
+                        -- width = 200
                     },
                     widget = wibox.layout.align.vertical
 
                 },
-                left = dpi(2),
-                right = dpi(2),
+                left = dpi(20),
+                right = dpi(20),
                 top = dpi(2),
                 bottom = dpi(2),
                 widget = wibox.container.margin,
             },
             id = 'background_role',
+            -- bg = "#ffffff",
             widget = wibox.container.background,
-            create_callback = function(self, c, index, objects)
-                local tooltip = awful.tooltip({
-                  objects = { self },
-                  timer_function = function()
-                    return c.name
-                  end,
-                })
-              
-                -- Then you can set tooltip props if required
-                tooltip.align = "left"
-                tooltip.mode = "outside"
-                tooltip.preferred_positions = {"left"}
-              end,
-
         }
     }
 
@@ -255,8 +251,14 @@ screen.connect_signal("request::desktop_decoration", function(s)
             s.mytaglist,
             s.mypromptbox,
         },
-        -- s.mytasklist, -- Middle widget
-        nil,
+        {
+            nil,
+            s.mytasklist,
+            nil,
+            layout = wibox.layout.align.horizontal,
+            expand = "outside",
+        },
+        -- nil,
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             spacing = -16,
@@ -325,6 +327,17 @@ ruled.client.connect_signal("request::rules", function()
         },
         properties = {
             ontop = true,
+            floating = true,
+        }
+    }
+
+    ruled.client.append_rule {
+        id = "Teamviewer",
+        rule_any = {
+            class = {"TeamViewer"}
+        },
+        properties = {
+            border_width = 0,
             floating = true,
         }
     }
@@ -448,10 +461,8 @@ end)
 -- Autostart
 awful.spawn.with_shell("compton")
 awful.util.spawn("nm-applet --indicator")
-awful.util.spawn("kdeconnect-indicator")
 awful.util.spawn("blueman-applet")
+awful.util.spawn("kdeconnect-indicator")
 awful.util.spawn("xfce4-power-manager")
 awful.util.spawn("/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &")
 -- awful.util.spawn("redshift-gtk -l 20.5937:78.9629 -t 6500:3400")
-
-

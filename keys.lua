@@ -131,7 +131,7 @@ awful.keyboard.append_global_keybindings(
                 awful.util.spawn("/home/maryll/.config/rofi/bin/launcher_ribbon")
             end, 
             {description = "rofi run prompt", group = "launcher"}),
-        awful.key({superkey}, "p", 
+        awful.key({superkey},"p", 
             function() 
                 menubar.show() 
             end,

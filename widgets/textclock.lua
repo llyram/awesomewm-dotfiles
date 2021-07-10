@@ -7,7 +7,7 @@ local gears = require("gears")
 mytextclock = wibox.widget {
       {
           {
-              widget = wibox.widget.textclock('<span font="Poppins Bold 10">%a %b %d, %H:%M </span>', 5)
+            widget = wibox.widget.textclock('<span font="Poppins Bold 10">%a %b %d, %I:%M %p </span>', 5),
           },
           widget = wibox.container.margin,
           left = dpi(20),
