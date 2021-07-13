@@ -17,7 +17,7 @@ theme.taglist_font = "MesloLGS NF 18"
 
 -- background
 theme.bg_normal = nord.nord0
-theme.bg_focus = "#ffffff" .. 15
+theme.bg_focus = nord.nord2
 -- theme.bg_urgent = theme.bg_normal
 theme.bg_minimize = theme.bg_normal
 
@@ -56,6 +56,7 @@ theme.border_single_client = false
 -- theme.taglist_bg_focus = "#000000"
 -- tasklist_[bg|fg]_[focus|urgent]
 theme.tasklist_fg_focus = theme.fg_normal
+-- theme.tasklist_plain_task_name = true
 -- titlebar_[bg|fg]_[normal|focus]
 -- tooltip_[font|opacity|fg_color|bg_color|border_width|border_color]
 -- mouse_finder_[color|timeout|animate_timeout|radius|factor]

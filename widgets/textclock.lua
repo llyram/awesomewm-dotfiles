@@ -2,23 +2,28 @@ local wibox = require("wibox")
 local dpi = require("beautiful.xresources").apply_dpi
 require("theme.colors")
 local gears = require("gears")
+clickable_container = require("widgets.clickable-container")
+local cal = require("widgets.calendar")
 
 -- Create a textclock widget
 mytextclock = wibox.widget {
-      {
-          {
-            widget = wibox.widget.textclock('<span font="Poppins Bold 10">%a %b %d, %I:%M %p </span>', 5),
-          },
-          widget = wibox.container.margin,
-          left = dpi(20),
-          right = dpi(15),
-          -- color = "#ffffff",
-      },
-      widget = wibox.container.background,
-      bg = nord.nord3,
-      shape = function(cr, width, height)
-          gears.shape.powerline(cr, width, height, -15)
-      end,
+  {
+    {
+        {
+          widget = wibox.widget.textclock('<span font="Poppins Bold 10">%a %b %d, %I:%M %p </span>', 5),
+        },
+        widget = wibox.container.margin,
+        left = dpi(20),
+        right = dpi(15),
+        -- color = "#ffffff",
+    },
+    widget = clickable_container
+  },
+  widget = wibox.container.background,
+  bg = nord.nord3,
+  shape = function(cr, width, height)
+      gears.shape.powerline(cr, width, height, -15)
+  end,
 }
 local old_cursor, old_wibox
 mytextclock:connect_signal(
@@ -44,5 +49,9 @@ mytextclock:connect_signal(
     end
   end
 )
+
+mytextclock:connect_signal("button::press", function(_, _, _, button)
+  if button == 1 then cal_toggle() end
+end)
 
 return mytextclock

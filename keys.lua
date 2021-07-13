@@ -41,112 +41,111 @@ awful.mouse.append_global_mousebindings({
 -- {{{ Key bindings
 
 -- General Awesome keys
-awful.keyboard.append_global_keybindings(
-    {
-        awful.key({ altkey }, "F4", 
-            function() 
-                exit_screen_show() 
-            end, 
-            {description = "Show logout screen", group = "custom"}),
-        awful.key({superkey}, "o",  
-            function() 
-                _G.screen.primary.right_panel:toggle() 
-            end, 
-            {description = 'toggle notification center',group = 'Awesome'}), 
-        -- keyboard volume keys
-        awful.key({}, 'XF86AudioRaiseVolume', 
-            function() 
-                volume.inc() 
-            end, 
-            {description = 'volume up', group = 'hotkeys'}),
-        awful.key({}, 'XF86AudioLowerVolume', 
-            function() 
-                volume.dec() 
-            end, 
-            {description = 'volume down', group = 'hotkeys'}),
-        awful.key({}, 'XF86AudioMute', 
-            function() 
-                volume.toggle() 
-            end, 
-            {description = 'toggle mute', group = 'hotkeys'}),
-        -- brightness keys
-        awful.key({}, "XF86MonBrightnessUp", 
-            function() 
-                brightness.inc() 
-            end,
-            {description = "increase brightness", group = "custom"}),
-        awful.key({}, "XF86MonBrightnessDown", 
-            function()
-                brightness.dec() 
-            end, 
-            {description = "decrease brightness", group = "custom"}),
-        -- brightness keys end
-        -- Media Keys
-        awful.key({}, "XF86AudioPlay", function()
-            awful.util.spawn("playerctl play-pause", false)
-        end),
-        awful.key({}, "XF86AudioNext", function()
-            awful.util.spawn("playerctl next", false)
-        end),
-        awful.key({}, "XF86AudioPrev", function()
-            awful.util.spawn("playerctl previous", false)
-        end),
-        awful.key({superkey}, "s", 
-            hotkeys_popup.show_help,
-            {description = "show help", group = "awesome"}),
-        -- awful.key({superkey,}, "w", 
-        --     function(c) 
-        --         -- mymainmenu:show() 
-        --         c.maximized = not c.maximized
-        --     end,
-        --     {description = "show main menu", group = "awesome"}),
-        awful.key({superkey, "Control"}, "r", 
-            awesome.restart,
-            {description = "reload awesome", group = "awesome"}),
-        awful.key({superkey, "Shift"}, "q", 
-            awesome.quit,
-            {description = "quit awesome", group = "awesome"}),
-        awful.key({superkey}, "x", 
-            function()
-                awful.prompt.run {
-                    prompt = "Run Lua code: ",
-                    textbox = awful.screen.focused().mypromptbox.widget,
-                    exe_callback = awful.util.eval,
-                    history_path = awful.util.get_cache_dir() .. "/history_eval"
-                }
-            end, 
-            {description = "lua execute prompt", group = "awesome"}),
-        awful.key({superkey}, "Return", 
-            function() 
-                awful.spawn(terminal) 
-            end,
-            {description = "open a terminal", group = "launcher"}),
-        awful.key({superkey}, "f", 
-            function() 
-                awful.spawn.with_shell("nautilus") 
-            end,
-            {description = "open file manager", group = "launcher"}),
-        awful.key({superkey}, "r", 
-            function()
-                awful.util.spawn("/home/maryll/.config/rofi/bin/launcher_ribbon")
-            end, 
-            {description = "rofi run prompt", group = "launcher"}),
-        awful.key({superkey},"p", 
-            function() 
-                menubar.show() 
-            end,
-            {description = "show the menubar", group = "launcher"}),
-        awful.key({superkey}, "b", 
-            function() 
-                awful.spawn(browser) 
-            end,
-            {description = "open a browser", group = "launcher"}),
-        awful.key({superkey}, "c",
-            function()
-                awful.spawn("/usr/lib/brave/brave --profile-directory=Default --app-id=peoigcfhkflakdcipcclkneidghaaphd", {tiled = true})
-            end,
-            {description = "open csTimer", group = "launcher"})
-    })
+awful.keyboard.append_global_keybindings({
+    awful.key({ altkey }, "F4", 
+        function() 
+            exit_screen_show() 
+        end, 
+        {description = "Show logout screen", group = "custom"}),
+    awful.key({superkey}, "o",  
+        function() 
+            _G.screen.primary.right_panel:toggle() 
+        end, 
+        {description = 'toggle notification center',group = 'Awesome'}), 
+    -- keyboard volume keys
+    awful.key({}, 'XF86AudioRaiseVolume', 
+        function() 
+            volume.inc() 
+        end, 
+        {description = 'volume up', group = 'hotkeys'}),
+    awful.key({}, 'XF86AudioLowerVolume', 
+        function() 
+            volume.dec() 
+        end, 
+        {description = 'volume down', group = 'hotkeys'}),
+    awful.key({}, 'XF86AudioMute', 
+        function() 
+            volume.toggle() 
+        end, 
+        {description = 'toggle mute', group = 'hotkeys'}),
+    -- brightness keys
+    awful.key({}, "XF86MonBrightnessUp", 
+        function() 
+            brightness.inc() 
+        end,
+        {description = "increase brightness", group = "custom"}),
+    awful.key({}, "XF86MonBrightnessDown", 
+        function()
+            brightness.dec() 
+        end, 
+        {description = "decrease brightness", group = "custom"}),
+    -- brightness keys end
+    -- Media Keys
+    awful.key({}, "XF86AudioPlay", function()
+        awful.util.spawn("playerctl play-pause", false)
+    end),
+    awful.key({}, "XF86AudioNext", function()
+        awful.util.spawn("playerctl next", false)
+    end),
+    awful.key({}, "XF86AudioPrev", function()
+        awful.util.spawn("playerctl previous", false)
+    end),
+    awful.key({superkey}, "s", 
+        hotkeys_popup.show_help,
+        {description = "show help", group = "awesome"}),
+    -- awful.key({superkey,}, "w", 
+    --     function(c) 
+    --         -- mymainmenu:show() 
+    --         c.maximized = not c.maximized
+    --     end,
+    --     {description = "show main menu", group = "awesome"}),
+    awful.key({superkey, "Control"}, "r", 
+        awesome.restart,
+        {description = "reload awesome", group = "awesome"}),
+    awful.key({superkey, "Shift"}, "q", 
+        awesome.quit,
+        {description = "quit awesome", group = "awesome"}),
+    awful.key({superkey}, "x", 
+        function()
+            awful.prompt.run {
+                prompt = "Run Lua code: ",
+                textbox = awful.screen.focused().mypromptbox.widget,
+                exe_callback = awful.util.eval,
+                history_path = awful.util.get_cache_dir() .. "/history_eval"
+            }
+        end, 
+        {description = "lua execute prompt", group = "awesome"}),
+    awful.key({superkey}, "Return", 
+        function() 
+            awful.spawn(terminal) 
+        end,
+        {description = "open a terminal", group = "launcher"}),
+    awful.key({superkey}, "f", 
+        function() 
+            awful.spawn.with_shell("nautilus") 
+        end,
+        {description = "open file manager", group = "launcher"}),
+    awful.key({superkey}, "r", 
+        function()
+            awful.util.spawn("/home/maryll/.config/rofi/bin/launcher_ribbon")
+        end, 
+        {description = "rofi run prompt", group = "launcher"}),
+    awful.key({superkey},"p", 
+        function() 
+            menubar.show() 
+        end,
+        {description = "show the menubar", group = "launcher"}),
+    awful.key({superkey}, "b", 
+        function() 
+            awful.spawn(browser) 
+        end,
+        {description = "open a browser", group = "launcher"}),
+    awful.key({superkey}, "c",
+        function()
+            awful.spawn("/usr/lib/brave/brave --profile-directory=Default --app-id=peoigcfhkflakdcipcclkneidghaaphd", {tiled = true})
+        end,
+        {description = "open csTimer", group = "launcher"})
+})
 
 -- Tags related keybindings
 awful.keyboard.append_global_keybindings(

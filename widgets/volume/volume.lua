@@ -8,8 +8,6 @@ local gears = require("gears")
 local awful = require("awful")
 
 local volume_icon = gears.filesystem.get_configuration_dir() .. "/widgets/volume/headphones.svg"
-local GET_VOLUME_CMD = 'amixer sget Master'
--- local GET = 
 
 
 local volume = {
@@ -27,7 +25,6 @@ function volume.inc()
     end
     volume.notif()
 
-    progress.visible = false
 end
 
 function volume.dec()
@@ -68,39 +65,39 @@ getVolume()
 
 
 
-progress = awful.popup{
-    widget = {
-        {
-            {
-                {
-                    max_value     = 100,
-                    value         = volume.level,
-                    forced_height = 15,
-                    forced_width  = 100,
-                    paddings      = 0,
-                    border_width  = 1,
-                    -- border_color  = "#ffffff",
-                    color = "#0076d7",
-                    background_color = "#000000",
-                    -- bar_shape = gears.shape.rounded_rect,
-                    widget        = wibox.widget.progressbar,
-                },
-                layout = wibox.container.rotate,
-                direction = 'east',
-            },
-            {
-                text   = tostring(50),
-                widget = wibox.widget.textbox,
-            },
-            layout = wibox.layout.align.vertical
-        },
-        widget = wibox.container.margin,
-        margins = 20,
-    },
-    ontop = true,
-    visible = false
-}
+-- progress = awful.popup{
+--     widget = {
+--         {
+--             {
+--                 {
+--                     max_value     = 100,
+--                     value         = volume.level,
+--                     forced_height = 15,
+--                     forced_width  = 100,
+--                     paddings      = 0,
+--                     border_width  = 1,
+--                     -- border_color  = "#ffffff",
+--                     color = "#0076d7",
+--                     background_color = "#000000",
+--                     -- bar_shape = gears.shape.rounded_rect,
+--                     widget        = wibox.widget.progressbar,
+--                 },
+--                 layout = wibox.container.rotate,
+--                 direction = 'east',
+--             },
+--             {
+--                 text   = tostring(50),
+--                 widget = wibox.widget.textbox,
+--             },
+--             layout = wibox.layout.align.vertical
+--         },
+--         widget = wibox.container.margin,
+--         margins = 20,
+--     },
+--     ontop = true,
+--     visible = false
+-- }
 
-awful.placement.top_left(progress, {margins = {top = 40, left = 20}})
+-- awful.placement.top_left(progress, {margins = {top = 40, left = 20}})
 
 return volume

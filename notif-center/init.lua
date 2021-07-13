@@ -37,7 +37,7 @@ local widget = wibox.widget {
     layout = wibox.layout.align.horizontal
 }
 
-local widget_button = clickable_container(wibox.container.margin(widget, dpi(8), dpi(8), dpi(2),dpi(2)))
+local widget_button = clickable_container(wibox.container.margin(widget, dpi(18), dpi(8), dpi(2),dpi(2)))
 
 widget_button:buttons(gears.table.join(awful.button({}, 1, nil, function()
     _G.screen.primary.notif_panel:toggle()

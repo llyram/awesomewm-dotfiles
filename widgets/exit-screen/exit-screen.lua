@@ -3,7 +3,7 @@ local gears = require('gears')
 local wibox = require('wibox')
 local beautiful = require('beautiful')
 -- local icons = require('theme.icons')
-local clickable_container = require('widgets.exit-screen.clickable-container')
+local clickable_container = require('widgets.clickable-container')
 -- local apps = require('configuration.apps')
 local dpi = require('beautiful').xresources.apply_dpi
 
