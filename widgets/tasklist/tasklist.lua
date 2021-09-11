@@ -24,12 +24,13 @@ local centered_tasklist = awful.widget.tasklist {
         end)
     },
     style = {
-        shape = function(cr, width, height)
-            gears.shape.parallelogram(cr, width, height, width-15)
-        end,
+        -- shape = function(cr, width, height)
+        --     gears.shape.parallelogram(cr, width, height, width-15)
+        -- end,
+        shape = gears.shape.rounded_bar
     },
     layout = {
-        spacing = -10,
+        spacing = 0,
         layout = wibox.layout.flex.horizontal,
         -- max_widget_size = 250,
     },

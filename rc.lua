@@ -46,6 +46,24 @@ end)
 -- {{{ Variable definitions
 -- fs define colours, icons, font and wallpapers.
 beautiful.init(require("theme.theme"))
+local bling = require("bling")
+
+bling.widget.tag_preview.enable {
+    show_client_content = true,  -- Whether or not to show the client content
+    x = 10,                       -- The x-coord of the popup
+    y = 10,                       -- The y-coord of the popup
+    scale = 0.25,                 -- The scale of the previews compared to the screen
+    honor_padding = false,        -- Honor padding when creating widget size
+    honor_workarea = false,       -- Honor work area when creating widget size
+    placement_fn = function(c)    -- Place the widget using awful.placement (this overrides x & y)
+        awful.placement.top_left(c, {
+            margins = {
+                top = 30,
+                left = 30
+            }
+        }) 
+    end           
+}   
 
 -- }}}
 
@@ -168,8 +186,26 @@ screen.connect_signal("request::desktop_decoration", function(s)
             },
             id     = 'background_role',
             widget = wibox.container.background,
+            create_callback = function(self, c3, index, objects) --luacheck: no unused args
+                self:connect_signal('mouse::enter', function()
+                    
+                    -- BLING: Only show widget when there are clients in the tag
+                    if #c3:clients() > 0 then
+                        -- BLING: Update the widget with the new tag
+                        awesome.emit_signal("bling::tag_preview::update", c3)
+                        -- BLING: Show the widget
+                        awesome.emit_signal("bling::tag_preview::visibility", s, true)
+                    end
+                end)
+                self:connect_signal('mouse::leave', function()
+    
+                    -- BLING: Turn the widget off
+                    awesome.emit_signal("bling::tag_preview::visibility", s, false)
+                end)
+            end,
         },
     }
+
 
     -- Create a tasklist widget
     s.mytasklist = mytasklist
@@ -278,6 +314,7 @@ ruled.client.connect_signal("request::rules", function()
         }
     }
 
+    
 
     -- Floating clients.
     ruled.client.append_rule {
@@ -290,12 +327,13 @@ ruled.client.connect_signal("request::rules", function()
             class = {
                 "Arandr", "Blueman-manager", "Gpick", "Kruler", "Sxiv",
                 "Tor Browser", "Wpa_gui", "veromix", "xtightvncviewer", "Wine",
-                "CPU Simulator"
+                "CPU Simulator", "pavucontrol", "Pavucontrol"
             },
             -- Note that the name property shown in xprop might be set slightly after creation of the client
             -- and the name shown thfloatingere might not match defined rules here.
             name = {
                 "Event Tester", -- xev.
+                "Volume Control"
                 -- "Picture in picture"
             },
             role = {
@@ -304,11 +342,24 @@ ruled.client.connect_signal("request::rules", function()
                 "pop-up" -- e.g. Google Chrome's (detached) Developer Tools.
             }
         },
-        except_any = {
+        -- except = {
+        --     class = {"crx_peoigcfhkflakdcipcclkneidghaaphd"},
+        --     name = {"csTimer - Professional Rubik's Cube Speedsolving/Training Timer"}
+        -- },
+        properties = {floating = true, titlebars_enabled = true}
+    }
+
+    ruled.client.append_rule {
+        id = "Cs timer",
+        rule_any = {
             class = {"crx_peoigcfhkflakdcipcclkneidghaaphd"},
-            -- name = {"csTimer - Professional Rubik's Cube Speedsolving/Training Timer"}
+            name = {"csTimer - Professional Rubik's Cube Speedsolving/Training Timer"}
+
         },
-        properties = {floating = true}
+        properties = {
+            floating = true,
+            
+        }
     }
 
 end)

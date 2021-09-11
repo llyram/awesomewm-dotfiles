@@ -20,7 +20,7 @@ local volume = {
 
 function volume.inc()
     if volume.level < volume.max then
-        volume.level = volume.level + volume.step
+        volume.level = math.floor(volume.level/volume.step)*volume.step + volume.step
         spawn.with_shell('pactl -- set-sink-volume @DEFAULT_SINK@ ' .. tostring(volume.level) .. '%')
     end
     volume.notif()
@@ -29,7 +29,7 @@ end
 
 function volume.dec()
     if volume.level > 0 then 
-        volume.level = volume.level - volume.step
+        volume.level = math.floor(volume.level/volume.step)*volume.step - volume.step
         spawn.with_shell('pactl -- set-sink-volume @DEFAULT_SINK@ ' .. tostring(volume.level) .. '%')
     end
     volume.notif()

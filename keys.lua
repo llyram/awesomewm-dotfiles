@@ -93,12 +93,11 @@ awful.keyboard.append_global_keybindings({
     awful.key({superkey}, "s", 
         hotkeys_popup.show_help,
         {description = "show help", group = "awesome"}),
-    -- awful.key({superkey,}, "w", 
-    --     function(c) 
-    --         -- mymainmenu:show() 
-    --         c.maximized = not c.maximized
-    --     end,
-    --     {description = "show main menu", group = "awesome"}),
+    awful.key({superkey, "Shift"}, "s", 
+        function(c) 
+            awful.spawn.with_shell("flameshot gui")
+        end,
+        {description = "flameshot", group = "launcher"}),
     awful.key({superkey, "Control"}, "r", 
         awesome.restart,
         {description = "reload awesome", group = "awesome"}),
@@ -142,7 +141,7 @@ awful.keyboard.append_global_keybindings({
         {description = "open a browser", group = "launcher"}),
     awful.key({superkey}, "c",
         function()
-            awful.spawn("/usr/lib/brave/brave --profile-directory=Default --app-id=peoigcfhkflakdcipcclkneidghaaphd", {tiled = true})
+            awful.spawn("/usr/lib/brave/brave --profile-directory=Default --app-id=peoigcfhkflakdcipcclkneidghaaphd", { floating = true })
         end,
         {description = "open csTimer", group = "launcher"})
 })

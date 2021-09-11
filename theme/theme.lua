@@ -17,7 +17,9 @@ theme.taglist_font = "MesloLGS NF 18"
 
 -- background
 theme.bg_normal = nord.nord0
+-- theme.bg_normal = "#282828"
 theme.bg_focus = nord.nord2
+-- theme.bg_focus = "#ffffff20"
 -- theme.bg_urgent = theme.bg_normal
 theme.bg_minimize = theme.bg_normal
 
@@ -164,7 +166,7 @@ theme.titlebar_maximized_button_normal_active_hover = tip .. "maximized_normal_a
 theme.titlebar_maximized_button_focus_active_hover  = tip .. "maximized_focus_active_hover.svg"
 
 -- theme.wallpaper = themes_path .. "default/background.png"
-theme.wallpaper = "/home/maryll/Pictures/Wallpapers/cool-mountains.jpg"
+theme.wallpaper = "/home/maryll/Pictures/Wallpapers/ign_beyondHillAndDale.jpg"
 
 -- You can use your own layout icons like this:
 theme.layout_fairh = themes_path .. "default/layouts/fairhw.png"
@@ -199,6 +201,17 @@ rnotification.connect_signal('request::rules', function()
     }
 end)
 
+theme.tag_preview_widget_border_radius = 1         -- Border radius of the widget (With AA)
+theme.tag_preview_client_border_radius = 1          -- Border radius of each client in the widget (With AA)
+theme.tag_preview_client_opacity = 1              -- Opacity of each client
+theme.tag_preview_client_bg = "#000000"             -- The bg color of each client
+theme.tag_preview_client_border_color = "#000000"   -- The border color of each client
+theme.tag_preview_client_border_width = 1           -- The border width of each client
+theme.tag_preview_widget_bg = "#000000"             -- The bg color of the widget
+theme.tag_preview_widget_border_color = "#282828"   -- The border color of the widget
+theme.tag_preview_widget_border_width = 1           -- The border width of the widget
+theme.tag_preview_widget_margin = 5                 -- The margin of the widget
+
 return theme
 
--- vim: filetype=lua:expandtab:shiftwidth=4:tabstop=8:softtabstop=4:textwidth=80
+
