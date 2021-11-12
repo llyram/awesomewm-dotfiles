@@ -12,13 +12,13 @@ require("theme.colors")
 local theme = {}
 
 -- fonts
-theme.font = "Poppins Regular 10"
+theme.font = "Product Sans Regular 10"
 theme.taglist_font = "MesloLGS NF 18"
 
 -- background
-theme.bg_normal = nord.nord0
--- theme.bg_normal = "#282828"
-theme.bg_focus = nord.nord2
+-- theme.bg_normal = nord.nord0
+theme.bg_normal = dracula.background
+theme.bg_focus = dracula.current_line
 -- theme.bg_focus = "#ffffff20"
 -- theme.bg_urgent = theme.bg_normal
 theme.bg_minimize = theme.bg_normal
@@ -44,7 +44,7 @@ theme.useless_gap = dpi(3)
 theme.gap_single_client = true
 
 -- borders
-theme.border_width = dpi(2)
+theme.border_width = dpi(1)
 theme.border_color_normal = "#000000"
 theme.border_color_active = dracula.comment
 -- theme.border_color_marked = gruvbox.red
@@ -166,7 +166,8 @@ theme.titlebar_maximized_button_normal_active_hover = tip .. "maximized_normal_a
 theme.titlebar_maximized_button_focus_active_hover  = tip .. "maximized_focus_active_hover.svg"
 
 -- theme.wallpaper = themes_path .. "default/background.png"
-theme.wallpaper = "/home/maryll/Pictures/Wallpapers/ign_beyondHillAndDale.jpg"
+theme.wallpaper = "/home/maryll/Pictures/Wallpapers/arch-dracula.png"
+-- theme.wallpaper = "/home/maryll/.config/awesome/xkcd-wallpaper/xkcd-wallpaper.png"
 
 -- You can use your own layout icons like this:
 theme.layout_fairh = themes_path .. "default/layouts/fairhw.png"

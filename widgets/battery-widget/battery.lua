@@ -28,7 +28,7 @@ local function worker(user_args)
 
     local warning_msg_title = args.warning_msg_title or
                                   'Huston, we have a problem'
-    local warning_msg_text = args.warning_msg_text or 'Battery is dying'
+    local warning_msg_text = args.warning_msg_text or 'Battery is low'
     local warning_msg_position = args.warning_msg_position or 'bottom_right'
     local warning_msg_icon = args.warning_msg_icon or WIDGET_DIR ..
                                  '/spaceman.jpg'
@@ -55,7 +55,7 @@ local function worker(user_args)
     --     layout = wibox.container.margin
     -- }
     local level_widget = wibox.widget {
-        font = "Poppins Bold 10",
+        font = "Product Sans 12",
         widget = wibox.widget.textbox
     }
 
@@ -107,6 +107,21 @@ local function worker(user_args)
             screen = mouse.screen
         }
     end
+    local function show_charged_battery_warning()
+        naughty.notify {
+            icon = warning_msg_icon,
+            icon_size = 100,
+            text = 'The battery has reached 70% charge',
+            title = 'Unplug your Charger!',
+            timeout = 25, -- show the warning for a longer time
+            hover_timeout = 0.5,
+            position = warning_msg_position,
+            bg = "#F06060",
+            fg = "#EEE9EF",
+            width = 300,
+            screen = mouse.screen
+        }
+    end
     local last_battery_check = os.time()
     local batteryType = "battery-good-symbolic"
 
@@ -117,8 +132,7 @@ local function worker(user_args)
             local status, charge_str, _ =
                 string.match(s, '.+: (%a+), (%d?%d?%d)%%,?(.*)')
             if status ~= nil then
-                table.insert(battery_info,
-                             {status = status, charge = tonumber(charge_str)})
+                table.insert(battery_info, {status = status, charge = tonumber(charge_str)})
             else
                 local cap_str = string.match(s, '.+:.+last full capacity (%d+)')
                 table.insert(capacities, tonumber(cap_str))
@@ -144,7 +158,7 @@ local function worker(user_args)
             level_widget.text = string.format('%d%%', charge)
         end
 
-        if (charge >= 0 and charge < 15) then
+        if (charge >= 0 and charge <= 30) then
             batteryType = "battery-empty%s-symbolic"
             if enable_battery_warning and status ~= 'Charging' and
                 os.difftime(os.time(), last_battery_check) > 300 then
@@ -159,8 +173,17 @@ local function worker(user_args)
             batteryType = "battery-low%s-symbolic"
         elseif (charge >= 60 and charge < 80) then
             batteryType = "battery-good%s-symbolic"
+            if (charge >=70) then
+                if enable_battery_warning and status == 'Charging' and os.difftime(os.time(), last_battery_check) > 300 then
+                    -- if 5 minutes have elapsed since the last warning
+                    last_battery_check = os.time()
+
+                    show_charged_battery_warning()
+                end
+            end
         elseif (charge >= 80 and charge <= 100) then
             batteryType = "battery-full%s-symbolic"
+            
         end
 
         if status == 'Charging' then
@@ -194,6 +217,5 @@ local function worker(user_args)
     return wibox.container.margin(battery_widget, margin_left, margin_right)
 end
 
-return setmetatable(battery_widget,
-                    {__call = function(_, ...) return worker(...) end})
+return setmetatable(battery_widget, {__call = function(_, ...) return worker(...) end})
 

@@ -4,13 +4,15 @@ require("theme.colors")
 local gears = require("gears")
 clickable_container = require("widgets.clickable-container")
 local cal = require("widgets.calendar")
+-- local markup = require("markup")
 
 -- Create a textclock widget
 mytextclock = wibox.widget {
   {
     {
         {
-          widget = wibox.widget.textclock('<span font="Poppins Bold 10">%a %b %d, %I:%M %p </span>', 5),
+          widget = wibox.widget.textclock('<span font="Product Sans Bold 12">%a %b %d, %I:%M %p </span>', 1),
+          -- widget = wibox.widget.textclock(markup("#FFFFFF", space3 .. "%H:%M " .. markup.font("Roboto 4", " ")))
         },
         widget = wibox.container.margin,
         left = dpi(20),

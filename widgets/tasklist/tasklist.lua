@@ -27,7 +27,7 @@ local centered_tasklist = awful.widget.tasklist {
         -- shape = function(cr, width, height)
         --     gears.shape.parallelogram(cr, width, height, width-15)
         -- end,
-        shape = gears.shape.rounded_bar
+        shape = gears.shape.rectangle
     },
     layout = {
         spacing = 0,
@@ -40,25 +40,22 @@ local centered_tasklist = awful.widget.tasklist {
                 {
                     {
                         {
-                            {
-                                {id = 'icon_role', widget = wibox.widget.imagebox},
-                                margins = 1,
-                                widget = wibox.container.margin
-                            },
-                            {
-                                id = 'text_role', widget = wibox.widget.textbox
-                            },
-                            layout = wibox.layout.fixed.horizontal,
-                            max_widget_size = 200,
+                            {id = 'icon_role', widget = wibox.widget.imagebox},
+                            margins = 1,
+                            right = 10,
+                            widget = wibox.container.margin
                         },
-                        widget = wibox.container.constraint,
-                        forced_width = 250
+                        {
+                            id = 'text_role', widget = wibox.widget.textbox
+                        },
+                        layout = wibox.layout.fixed.horizontal,
+                        max_widget_size = 200,
                     },
-                    widget = wibox.layout.align.vertical
-                
+                    widget = wibox.container.constraint,
+                    forced_width = 250
                 },
-                left = dpi(20),
-                right = dpi(20),
+                left = dpi(10),
+                right = dpi(10),
                 top = dpi(2),
                 bottom = dpi(2),
                 widget = wibox.container.margin,

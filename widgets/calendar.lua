@@ -67,7 +67,7 @@ end
 local cal = wibox.widget {
 
     date = os.date('*t'),
-    font = 'Roboto 10',
+    font = 'Product Sans 10',
     fn_embed = decorate_cell,
     -- start_sunday = true,
     widget = wibox.widget.calendar.month

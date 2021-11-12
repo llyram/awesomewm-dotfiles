@@ -141,7 +141,7 @@ awful.keyboard.append_global_keybindings({
         {description = "open a browser", group = "launcher"}),
     awful.key({superkey}, "c",
         function()
-            awful.spawn("/usr/lib/brave/brave --profile-directory=Default --app-id=peoigcfhkflakdcipcclkneidghaaphd", { floating = true })
+            awful.util.spawn("/usr/lib/brave/brave --app-id=peoigcfhkflakdcipcclkneidghaaphd", {floating = false})
         end,
         {description = "open csTimer", group = "launcher"})
 })

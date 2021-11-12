@@ -46,24 +46,6 @@ end)
 -- {{{ Variable definitions
 -- fs define colours, icons, font and wallpapers.
 beautiful.init(require("theme.theme"))
-local bling = require("bling")
-
-bling.widget.tag_preview.enable {
-    show_client_content = true,  -- Whether or not to show the client content
-    x = 10,                       -- The x-coord of the popup
-    y = 10,                       -- The y-coord of the popup
-    scale = 0.25,                 -- The scale of the previews compared to the screen
-    honor_padding = false,        -- Honor padding when creating widget size
-    honor_workarea = false,       -- Honor work area when creating widget size
-    placement_fn = function(c)    -- Place the widget using awful.placement (this overrides x & y)
-        awful.placement.top_left(c, {
-            margins = {
-                top = 30,
-                left = 30
-            }
-        }) 
-    end           
-}   
 
 -- }}}
 
@@ -186,23 +168,24 @@ screen.connect_signal("request::desktop_decoration", function(s)
             },
             id     = 'background_role',
             widget = wibox.container.background,
-            create_callback = function(self, c3, index, objects) --luacheck: no unused args
-                self:connect_signal('mouse::enter', function()
+            
+            -- create_callback = function(self, c3, index, objects) --luacheck: no unused args
+            --     self:connect_signal('mouse::enter', function()
                     
-                    -- BLING: Only show widget when there are clients in the tag
-                    if #c3:clients() > 0 then
-                        -- BLING: Update the widget with the new tag
-                        awesome.emit_signal("bling::tag_preview::update", c3)
-                        -- BLING: Show the widget
-                        awesome.emit_signal("bling::tag_preview::visibility", s, true)
-                    end
-                end)
-                self:connect_signal('mouse::leave', function()
+            --         -- BLING: Only show widget when there are clients in the tag
+            --         if #c3:clients() > 0 then
+            --             -- BLING: Update the widget with the new tag
+            --             awesome.emit_signal("bling::tag_preview::update", c3)
+            --             -- BLING: Show the widget
+            --             awesome.emit_signal("bling::tag_preview::visibility", s, true)
+            --         end
+            --     end)
+            --     self:connect_signal('mouse::leave', function()
     
-                    -- BLING: Turn the widget off
-                    awesome.emit_signal("bling::tag_preview::visibility", s, false)
-                end)
-            end,
+            --         -- BLING: Turn the widget off
+            --         awesome.emit_signal("bling::tag_preview::visibility", s, false)
+            --     end)
+            -- end,
         },
     }
 
@@ -211,7 +194,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
     s.mytasklist = mytasklist
 
     -- Create the wibox
-    s.mywibox = awful.wibar({position = "top", screen = s, height = dpi(27)})
+    s.mywibox = awful.wibar({position="top", screen = s, height = dpi(27)})
 
     -- Add widgets to the wibox
     s.mywibox.widget = {
@@ -225,8 +208,8 @@ screen.connect_signal("request::desktop_decoration", function(s)
             nil,
             s.mytasklist,
             nil,
-            layout = wibox.layout.align.horizontal,
-            expand = "outside",
+            layout = wibox.layout.fixed.horizontal,
+            -- expand = "outside",
         },
         -- nil,
         { -- Right widgets
@@ -327,7 +310,7 @@ ruled.client.connect_signal("request::rules", function()
             class = {
                 "Arandr", "Blueman-manager", "Gpick", "Kruler", "Sxiv",
                 "Tor Browser", "Wpa_gui", "veromix", "xtightvncviewer", "Wine",
-                "CPU Simulator", "pavucontrol", "Pavucontrol"
+                "CPU Simulator", "pavucontrol", "Pavucontrol", "matplotlib"
             },
             -- Note that the name property shown in xprop might be set slightly after creation of the client
             -- and the name shown thfloatingere might not match defined rules here.
@@ -338,26 +321,26 @@ ruled.client.connect_signal("request::rules", function()
             },
             role = {
                 "AlarmWindow", -- Thunderbird's calendar.
-                "ConfigManager", -- Thunderbird's about:config.
+                -- "ConfigManager", -- Thunderbird's about:config.
                 "pop-up" -- e.g. Google Chrome's (detached) Developer Tools.
             }
         },
-        -- except = {
-        --     class = {"crx_peoigcfhkflakdcipcclkneidghaaphd"},
-        --     name = {"csTimer - Professional Rubik's Cube Speedsolving/Training Timer"}
-        -- },
+        except_any = {
+            class = {"crx_peoigcfhkflakdcipcclkneidghaaphd"},
+            name = {"csTimer"}
+        },
         properties = {floating = true, titlebars_enabled = true}
     }
 
     ruled.client.append_rule {
         id = "Cs timer",
         rule_any = {
-            class = {"crx_peoigcfhkflakdcipcclkneidghaaphd"},
-            name = {"csTimer - Professional Rubik's Cube Speedsolving/Training Timer"}
+            -- class = {"crx_peoigcfhkflakdcipcclkneidghaaphd"},
+            name = {"csTimer"}
 
         },
         properties = {
-            floating = true,
+            tiled = true,
             
         }
     }
@@ -378,7 +361,7 @@ client.connect_signal("request::titlebars", function(c)
         end)
     }
 
-    awful.titlebar(c,{font = "Open Sans 7", size = dpi(25)}).widget = {
+    awful.titlebar(c,{font = "Product Sans 7", size = dpi(25)}).widget = {
         { -- Left
             -- awful.titlebar.widget.iconwidget(c),
             -- buttons = buttons,
@@ -430,11 +413,18 @@ end)
 client.connect_signal('unfocus', function(c)
     c.border_color = beautiful.border_color_normal
 end)
+-- client.connect_signal('manage', function(c)
+--     naughty.notify({
+--         text = c.role
+--     })
+-- end)
 
 -- Autostart
 awful.spawn.with_shell("compton")
 awful.util.spawn("nm-applet --indicator")
 awful.util.spawn("blueman-applet")
-awful.util.spawn("kdeconnect-indicator")
+-- awful.util.spawn("kdeconnect-indicator")
+awful.util.spawn("mictray")
 awful.util.spawn("xfce4-power-manager")
 awful.util.spawn("/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &")
+awful.spawn.with_shell("xrandr --dpi 96")

@@ -48,7 +48,7 @@ function volume.notif()
             text = tostring(volume.level),
             position = "top_left",
             icon = volume_icon,
-            font = "Open Sans Bold 15",
+            font = "Product Sans Bold 17",
             title = "indicator",
             timeout = volume.timeout,
         }

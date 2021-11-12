@@ -3,8 +3,11 @@ My config files for awesomewm
 
 - WM : AwesomeWM
 - Terminal : Alacritty
-- Theme : Nord
-- Wallpaper : [here](https://github.com/Maryll-castelino/Wallpapers/blob/master/cool-mountains.jpg)
+- Theme : Nord + Dracula
+- GTK Theme : Dracula
+- vscode theme : One Dark Pro
+- compositor : [jonaburg-picom](https://github.com/jonaburg/picom)
+- Wallpaper : [here](https://github.com/Maryll-castelino/Wallpapers/blob/master/arch-dracula.png)
 
 ## Screenshots
 ![home](screenshots/home.png)

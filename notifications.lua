@@ -182,23 +182,27 @@ naughty.connect_signal("request::display", function(n)
                     },
                     {
                         {
-                            { ---- Title -----
-                                -- naughty.widget.title,
-                                text = n.title,
-                                align = "center",
-                                font = "Bangers",
-                                widget = wibox.widget.textbox
+                            {
+                                { ---- Title -----
+                                    -- naughty.widget.title,
+                                    text = n.title,
+                                    align = "left",
+                                    font = "Product Sans Regular 12",
+                                    widget = wibox.widget.textbox
+                                },
+                                widget = wibox.container.margin,
+                                bottom = dpi(5),
                             },
         
                             { ----- Body/Message -----
                                 
-                                widget = naughty.widget.message,
+                                -- widget = naughty.widget.message,
                                 align = "left",
         
-                                -- font = "Poppins 15",
-                                -- text = n.message,
+                                font = "Product Sans Thin Regular 10",
+                                text = n.message,
         
-                                -- widget = wibox.widget.textbox
+                                widget = wibox.widget.textbox
         
                             },
                             actions,
@@ -207,7 +211,7 @@ naughty.connect_signal("request::display", function(n)
         
                         },
         
-                        margins = dpi(10),
+                        margins = dpi(5),
                         widget = wibox.container.margin,
                     },
                     layout = wibox.layout.align.horizontal
@@ -216,7 +220,7 @@ naughty.connect_signal("request::display", function(n)
                 strategy = "max",
                 height = dpi(180),
                 -- forced_height = 100,
-                width = dpi(400),
+                forced_width = dpi(300),
                 -- forced_width = 400,
                 widget = wibox.container.constraint
             },
