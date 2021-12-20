@@ -143,7 +143,12 @@ awful.keyboard.append_global_keybindings({
         function()
             awful.util.spawn("/usr/lib/brave/brave --app-id=peoigcfhkflakdcipcclkneidghaaphd", {floating = false})
         end,
-        {description = "open csTimer", group = "launcher"})
+        {description = "open csTimer", group = "launcher"}),
+    awful.key({superkey}, "g",
+        function()
+            awful.util.spawn("gmtool admin start vpn-proxy")
+        end,
+        {description = "start vpn-proxy vm", group = "launcher"})
 })
 
 -- Tags related keybindings

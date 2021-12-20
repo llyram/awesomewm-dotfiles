@@ -16,10 +16,10 @@ theme.font = "Product Sans Regular 10"
 theme.taglist_font = "MesloLGS NF 18"
 
 -- background
--- theme.bg_normal = nord.nord0
-theme.bg_normal = dracula.background
-theme.bg_focus = dracula.current_line
--- theme.bg_focus = "#ffffff20"
+theme.bg_normal = "#101010"
+-- theme.bg_normal = dracula.background
+-- theme.bg_focus = dracula.current_line
+theme.bg_focus = "#202020"
 -- theme.bg_urgent = theme.bg_normal
 theme.bg_minimize = theme.bg_normal
 
@@ -37,7 +37,7 @@ theme.titlebar_fg_focus = theme.fg_normal
 
 -- systray
 theme.systray_icon_spacing = dpi(2)
-theme.bg_systray = nord.nord2
+-- theme.bg_systray = nord.nord2
 
 -- gaps
 theme.useless_gap = dpi(3)
@@ -166,7 +166,7 @@ theme.titlebar_maximized_button_normal_active_hover = tip .. "maximized_normal_a
 theme.titlebar_maximized_button_focus_active_hover  = tip .. "maximized_focus_active_hover.svg"
 
 -- theme.wallpaper = themes_path .. "default/background.png"
-theme.wallpaper = "/home/maryll/Pictures/Wallpapers/arch-dracula.png"
+theme.wallpaper = "/home/maryll/Pictures/Wallpapers/firewatch.jpg"
 -- theme.wallpaper = "/home/maryll/.config/awesome/xkcd-wallpaper/xkcd-wallpaper.png"
 
 -- You can use your own layout icons like this:
@@ -202,16 +202,6 @@ rnotification.connect_signal('request::rules', function()
     }
 end)
 
-theme.tag_preview_widget_border_radius = 1         -- Border radius of the widget (With AA)
-theme.tag_preview_client_border_radius = 1          -- Border radius of each client in the widget (With AA)
-theme.tag_preview_client_opacity = 1              -- Opacity of each client
-theme.tag_preview_client_bg = "#000000"             -- The bg color of each client
-theme.tag_preview_client_border_color = "#000000"   -- The border color of each client
-theme.tag_preview_client_border_width = 1           -- The border width of each client
-theme.tag_preview_widget_bg = "#000000"             -- The bg color of the widget
-theme.tag_preview_widget_border_color = "#282828"   -- The border color of the widget
-theme.tag_preview_widget_border_width = 1           -- The border width of the widget
-theme.tag_preview_widget_margin = 5                 -- The margin of the widget
 
 return theme
 

@@ -27,7 +27,7 @@ local centered_tasklist = awful.widget.tasklist {
         -- shape = function(cr, width, height)
         --     gears.shape.parallelogram(cr, width, height, width-15)
         -- end,
-        shape = gears.shape.rectangle
+        shape = gears.shape.rounded_rect
     },
     layout = {
         spacing = 0,
@@ -40,32 +40,36 @@ local centered_tasklist = awful.widget.tasklist {
                 {
                     {
                         {
-                            {id = 'icon_role', widget = wibox.widget.imagebox},
-                            margins = 1,
-                            right = 10,
-                            widget = wibox.container.margin
+                            {
+                                {id = 'icon_role', widget = wibox.widget.imagebox},
+                                margins = 1,
+                                right = 10,
+                                widget = wibox.container.margin
+                            },
+                            {
+                                id = 'text_role', widget = wibox.widget.textbox
+                            },
+                            layout = wibox.layout.fixed.horizontal,
+                            max_widget_size = 200,
                         },
-                        {
-                            id = 'text_role', widget = wibox.widget.textbox
-                        },
-                        layout = wibox.layout.fixed.horizontal,
-                        max_widget_size = 200,
+                        widget = wibox.container.constraint,
+                        forced_width = 250
                     },
-                    widget = wibox.container.constraint,
-                    forced_width = 250
+                    left = dpi(10),
+                    right = dpi(10),
+                    top = dpi(2),
+                    bottom = dpi(2),
+                    widget = wibox.container.margin,
                 },
-                left = dpi(10),
-                right = dpi(10),
-                top = dpi(2),
-                bottom = dpi(2),
-                widget = wibox.container.margin,
+                widget = clickable_container,
             },
-            widget = clickable_container,
+            id = 'background_role',
+            -- bg = "#ffffff",
+            widget = wibox.container.background,
         },
-        id = 'background_role',
-        -- bg = "#ffffff",
-        widget = wibox.container.background,
-        
+        widget = wibox.container.margin,
+        top = 2,
+        bottom = 2,
     }
 }
 

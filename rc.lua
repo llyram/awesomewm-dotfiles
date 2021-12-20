@@ -137,7 +137,8 @@ screen.connect_signal("request::desktop_decoration", function(s)
         spacing = 10,
         filter = awful.widget.taglist.filter.all,
         style = {
-            bg_focus = beautiful.bg_normal
+            bg_focus = beautiful.bg_normal,
+            -- fg_focus = "#FFFFFF"
         },
         buttons = {
             awful.button({}, 1, function(t) t:view_only() end),
@@ -168,24 +169,8 @@ screen.connect_signal("request::desktop_decoration", function(s)
             },
             id     = 'background_role',
             widget = wibox.container.background,
+
             
-            -- create_callback = function(self, c3, index, objects) --luacheck: no unused args
-            --     self:connect_signal('mouse::enter', function()
-                    
-            --         -- BLING: Only show widget when there are clients in the tag
-            --         if #c3:clients() > 0 then
-            --             -- BLING: Update the widget with the new tag
-            --             awesome.emit_signal("bling::tag_preview::update", c3)
-            --             -- BLING: Show the widget
-            --             awesome.emit_signal("bling::tag_preview::visibility", s, true)
-            --         end
-            --     end)
-            --     self:connect_signal('mouse::leave', function()
-    
-            --         -- BLING: Turn the widget off
-            --         awesome.emit_signal("bling::tag_preview::visibility", s, false)
-            --     end)
-            -- end,
         },
     }
 
@@ -201,7 +186,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
         layout = wibox.layout.align.horizontal,
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
-            wibox.container.background(wibox.layout.margin(mylayoutbox, dpi(5), 5, 5, 5), nord.nord3),
+            wibox.container.background(wibox.layout.margin(mylayoutbox, dpi(5), 5, 5, 5), "#101010"),
             s.mytaglist,
         },
         { -- Middle widgets
@@ -223,7 +208,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
                     right = dpi(15),
                 },
                 widget = wibox.container.background,
-                bg = nord.nord1,
+                -- bg = nord.nord1,
                 shape = function(cr, width, height)
                     gears.shape.powerline(cr, width, height, -15)
                 end,
@@ -233,7 +218,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
             wibox.widget{ -- notification center
                 require('notif-center'),
                 widget = wibox.container.background,
-                bg = "#6c768a",
+                -- bg = "#6c768a",
                 shape = function(cr, width, height)
                     gears.shape.rectangular_tag(cr, width, height, 15)
                 end,
@@ -310,13 +295,14 @@ ruled.client.connect_signal("request::rules", function()
             class = {
                 "Arandr", "Blueman-manager", "Gpick", "Kruler", "Sxiv",
                 "Tor Browser", "Wpa_gui", "veromix", "xtightvncviewer", "Wine",
-                "CPU Simulator", "pavucontrol", "Pavucontrol", "matplotlib"
+                "CPU Simulator", "pavucontrol", "Pavucontrol", "matplotlib", "Wihotspot-gui",
             },
             -- Note that the name property shown in xprop might be set slightly after creation of the client
             -- and the name shown thfloatingere might not match defined rules here.
             name = {
                 "Event Tester", -- xev.
-                "Volume Control"
+                "Volume Control",
+                "PlayOnLinux"
                 -- "Picture in picture"
             },
             role = {
@@ -428,3 +414,4 @@ awful.util.spawn("mictray")
 awful.util.spawn("xfce4-power-manager")
 awful.util.spawn("/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &")
 awful.spawn.with_shell("xrandr --dpi 96")
+awful.spawn.with_shell('bash -c \'a=$(xinput list | grep "Touchpad") && b=${a: -24:2} && xinput set-prop $b "Device Enabled" 0\'')

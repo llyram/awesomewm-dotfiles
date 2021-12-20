@@ -22,10 +22,11 @@ mytextclock = wibox.widget {
     widget = clickable_container
   },
   widget = wibox.container.background,
-  bg = nord.nord3,
-  shape = function(cr, width, height)
-      gears.shape.powerline(cr, width, height, -15)
-  end,
+  -- bg = nord.nord3,
+  shape = gears.shape.rounded_bar
+  -- shape = function(cr, width, height)
+      -- gears.shape.powerline(cr, width, height, -15)
+  -- end,
 }
 local old_cursor, old_wibox
 mytextclock:connect_signal(
