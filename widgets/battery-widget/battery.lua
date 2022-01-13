@@ -29,7 +29,7 @@ local function worker(user_args)
     local warning_msg_title = args.warning_msg_title or
                                   'Huston, we have a problem'
     local warning_msg_text = args.warning_msg_text or 'Battery is low'
-    local warning_msg_position = args.warning_msg_position or 'bottom_right'
+    local warning_msg_position = args.warning_msg_position or 'top_right'
     local warning_msg_icon = args.warning_msg_icon or WIDGET_DIR ..
                                  '/spaceman.jpg'
     local enable_battery_warning = args.enable_battery_warning
@@ -45,9 +45,13 @@ local function worker(user_args)
     end
 
     local icon_widget = wibox.widget {
-        {id = "icon", widget = wibox.widget.imagebox, resize = false},
-        top = dpi(6),
-        layout = wibox.container.margin
+        {
+            id = "icon", widget = wibox.widget.imagebox, resize = false
+        },
+        -- top = dpi(6),
+        -- bottom = dpi(6),
+        widget = wibox.container.place,
+        valign = center
     }
     -- local icon_widget = wibox.widget {
     --     {id = "icon", widget = wibox.widget.imagebox, resize = false},
@@ -55,11 +59,12 @@ local function worker(user_args)
     --     layout = wibox.container.margin
     -- }
     local level_widget = wibox.widget {
-        font = "Product Sans 12",
+        font = "Product Sans Bold 12",
         widget = wibox.widget.textbox
     }
 
     battery_widget = wibox.widget {
+
         icon_widget,
         level_widget,
         layout = wibox.layout.fixed.horizontal

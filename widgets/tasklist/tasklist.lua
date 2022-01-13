@@ -27,6 +27,8 @@ local centered_tasklist = awful.widget.tasklist {
         -- shape = function(cr, width, height)
         --     gears.shape.parallelogram(cr, width, height, width-15)
         -- end,
+        -- fg_normal = "#717F81",
+        fg_minimize = "#717F81",
         shape = gears.shape.rounded_rect
     },
     layout = {

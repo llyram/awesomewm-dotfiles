@@ -67,7 +67,7 @@ end
 local cal = wibox.widget {
 
     date = os.date('*t'),
-    font = 'Product Sans 10',
+    font = 'Product Sans 13',
     fn_embed = decorate_cell,
     -- start_sunday = true,
     widget = wibox.widget.calendar.month
@@ -127,7 +127,7 @@ function cal_toggle()
         popup:set_widget(calWidget)
         popup.visible = not popup.visible
     else        
-        awful.placement.top_right(popup, { margins = { top = 35, right = 5}, parent = awful.screen.focused() })
+        awful.placement.top_right(popup, { margins = { top = 40, right = 5}, parent = awful.screen.focused() })
 
         popup.visible = true
 

@@ -47,7 +47,9 @@ end
 
 function suspend_command()
   exit_screen_hide()
-  awful.spawn.with_shell('dm-tool switch-to-greeter && systemctl suspend')
+  -- awful.spawn.with_shell('dm-tool switch-to-greeter')
+  awful.spawn.with_shell('systemctl suspend')
+
 end
 function exit_command()
   _G.awesome.quit()

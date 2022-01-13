@@ -17,7 +17,7 @@ brightness_icon = gears.filesystem.get_configuration_dir() .. "widgets/brightnes
 
 function brightness.inc()
     if brightness.level < 100 then
-        brightness.level = brightness.level + brightness.step
+        brightness.level = math.floor(brightness.level/brightness.step)*brightness.step + brightness.step
         spawn.with_shell("xbacklight -set " .. tostring(brightness.level))
     end
     notif()
@@ -25,7 +25,7 @@ end
 
 function brightness.dec()
     if brightness.level > 0 then
-        brightness.level = brightness.level - brightness.step
+        brightness.level = math.floor(brightness.level/brightness.step)*brightness.step - brightness.step
         spawn.with_shell("xbacklight -set " .. tostring(brightness.level))
     end
     notif()

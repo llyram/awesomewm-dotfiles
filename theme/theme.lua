@@ -1,7 +1,7 @@
 local theme_assets = require("beautiful.theme_assets")
 local xresources = require("beautiful.xresources")
 local rnotification = require("ruled.notification")
-local notification = require("naughty.notification")
+-- local notification = require("naughty.notification")
 local dpi = xresources.apply_dpi
 local gfs = require("gears.filesystem")
 local themes_path = gfs.get_themes_dir()
@@ -16,16 +16,16 @@ theme.font = "Product Sans Regular 10"
 theme.taglist_font = "MesloLGS NF 18"
 
 -- background
-theme.bg_normal = "#101010"
+theme.bg_normal = "#1E2227"
 -- theme.bg_normal = dracula.background
 -- theme.bg_focus = dracula.current_line
-theme.bg_focus = "#202020"
+theme.bg_focus = "#23272E"
 -- theme.bg_urgent = theme.bg_normal
 theme.bg_minimize = theme.bg_normal
 
 -- foreground
 theme.fg_normal = nord.nord6
-theme.fg_focus = nord.nord8
+theme.fg_focus = nord.nord4
 theme.fg_urgent = nord.nord11
 theme.fg_minimize = theme.fg_normal
 
@@ -40,14 +40,14 @@ theme.systray_icon_spacing = dpi(2)
 -- theme.bg_systray = nord.nord2
 
 -- gaps
-theme.useless_gap = dpi(3)
+theme.useless_gap = dpi(5)
 theme.gap_single_client = true
 
 -- borders
-theme.border_width = dpi(1)
+theme.border_width = dpi(0)
 theme.border_color_normal = "#000000"
 theme.border_color_active = dracula.comment
--- theme.border_color_marked = gruvbox.red
+theme.border_color_marked = gruvbox.red
 theme.maximized_hide_border = true
 theme.border_single_client = false
 
@@ -93,80 +93,11 @@ theme.menu_width = dpi(100)
 -- beautiful.variable in your rc.lua
 -- theme.bg_widget = "#cc0000"
 
--- Define the image to load
--- theme.titlebar_close_button_normal = themes_path .. "default/titlebar/close_normal.png"
--- theme.titlebar_close_button_focus = themes_path .. "default/titlebar/close_focus.png"
-
--- theme.titlebar_minimize_button_normal = themes_path .. "default/titlebar/minimize_normal.png"
--- theme.titlebar_minimize_button_focus = themes_path .. "default/titlebar/minimize_focus.png"
-
--- theme.titlebar_ontop_button_normal_inactive = themes_path .. "default/titlebar/ontop_normal_inactive.png"
--- theme.titlebar_ontop_button_focus_inactive = themes_path .. "default/titlebar/ontop_focus_inactive.png"
--- theme.titlebar_ontop_button_normal_active = themes_path .. "default/titlebar/ontop_normal_active.png"
--- theme.titlebar_ontop_button_focus_active = themes_path .. "default/titlebar/ontop_focus_active.png"
-
--- theme.titlebar_sticky_button_normal_inactive = themes_path .. "default/titlebar/sticky_normal_inactive.png"
--- theme.titlebar_sticky_button_focus_inactive = themes_path .. "default/titlebar/sticky_focus_inactive.png"
--- theme.titlebar_sticky_button_normal_active = themes_path .. "default/titlebar/sticky_normal_active.png"
--- theme.titlebar_sticky_button_focus_active = themes_path .. "default/titlebar/sticky_focus_active.png"
-
--- theme.titlebar_floating_button_normal_inactive = themes_path .. "default/titlebar/floating_normal_inactive.png"
--- theme.titlebar_floating_button_focus_inactive = themes_path .. "default/titlebar/floating_focus_inactive.png"
--- theme.titlebar_floating_button_normal_active = themes_path .. "default/titlebar/floating_normal_active.png"
--- theme.titlebar_floating_button_focus_active = themes_path .. "default/titlebar/floating_focus_active.png"
-
--- theme.titlebar_maximized_button_normal_inactive = themes_path .. "default/titlebar/maximized_normal_inactive.png"
--- theme.titlebar_maximized_button_focus_inactive = themes_path .. "default/titlebar/maximized_focus_inactive.png"
--- theme.titlebar_maximized_button_normal_active = themes_path .. "default/titlebar/maximized_normal_active.png"
--- theme.titlebar_maximized_button_focus_active = themes_path .. "default/titlebar/maximized_focus_active.png"
 
 
--- Titlebar buttons
--- Define the images to load
-theme.titlebar_close_button_normal = tip .. "close_normal.svg"
-theme.titlebar_close_button_focus  = tip .. "close_focus.svg"
-theme.titlebar_minimize_button_normal = tip .. "minimize_normal.svg"
-theme.titlebar_minimize_button_focus  = tip .. "minimize_focus.svg"
-theme.titlebar_ontop_button_normal_inactive = tip .. "ontop_normal_inactive.svg"
-theme.titlebar_ontop_button_focus_inactive  = tip .. "ontop_focus_inactive.svg"
-theme.titlebar_ontop_button_normal_active = tip .. "ontop_normal_active.svg"
-theme.titlebar_ontop_button_focus_active  = tip .. "ontop_focus_active.svg"
-theme.titlebar_sticky_button_normal_inactive = tip .. "sticky_normal_inactive.svg"
-theme.titlebar_sticky_button_focus_inactive  = tip .. "sticky_focus_inactive.svg"
-theme.titlebar_sticky_button_normal_active = tip .. "sticky_normal_active.svg"
-theme.titlebar_sticky_button_focus_active  = tip .. "sticky_focus_active.svg"
-theme.titlebar_floating_button_normal_inactive = tip .. "floating_normal_inactive.svg"
-theme.titlebar_floating_button_focus_inactive  = tip .. "floating_focus_inactive.svg"
-theme.titlebar_floating_button_normal_active = tip .. "floating_normal_active.svg"
-theme.titlebar_floating_button_focus_active  = tip .. "floating_focus_active.svg"
-theme.titlebar_maximized_button_normal_inactive = tip .. "maximized_normal_inactive.svg"
-theme.titlebar_maximized_button_focus_inactive  = tip .. "maximized_focus_inactive.svg"
-theme.titlebar_maximized_button_normal_active = tip .. "maximized_normal_active.svg"
-theme.titlebar_maximized_button_focus_active  = tip .. "maximized_focus_active.svg"
--- (hover)
-theme.titlebar_close_button_normal_hover = tip .. "close_normal_hover.svg"
-theme.titlebar_close_button_focus_hover  = tip .. "close_focus_hover.svg"
-theme.titlebar_minimize_button_normal_hover = tip .. "minimize_normal_hover.svg"
-theme.titlebar_minimize_button_focus_hover  = tip .. "minimize_focus_hover.svg"
-theme.titlebar_ontop_button_normal_inactive_hover = tip .. "ontop_normal_inactive_hover.svg"
-theme.titlebar_ontop_button_focus_inactive_hover  = tip .. "ontop_focus_inactive_hover.svg"
-theme.titlebar_ontop_button_normal_active_hover = tip .. "ontop_normal_active_hover.svg"
-theme.titlebar_ontop_button_focus_active_hover  = tip .. "ontop_focus_active_hover.svg"
-theme.titlebar_sticky_button_normal_inactive_hover = tip .. "sticky_normal_inactive_hover.svg"
-theme.titlebar_sticky_button_focus_inactive_hover  = tip .. "sticky_focus_inactive_hover.svg"
-theme.titlebar_sticky_button_normal_active_hover = tip .. "sticky_normal_active_hover.svg"
-theme.titlebar_sticky_button_focus_active_hover  = tip .. "sticky_focus_active_hover.svg"
-theme.titlebar_floating_button_normal_inactive_hover = tip .. "floating_normal_inactive_hover.svg"
-theme.titlebar_floating_button_focus_inactive_hover  = tip .. "floating_focus_inactive_hover.svg"
-theme.titlebar_floating_button_normal_active_hover = tip .. "floating_normal_active_hover.svg"
-theme.titlebar_floating_button_focus_active_hover  = tip .. "floating_focus_active_hover.svg"
-theme.titlebar_maximized_button_normal_inactive_hover = tip .. "maximized_normal_inactive_hover.svg"
-theme.titlebar_maximized_button_focus_inactive_hover  = tip .. "maximized_focus_inactive_hover.svg"
-theme.titlebar_maximized_button_normal_active_hover = tip .. "maximized_normal_active_hover.svg"
-theme.titlebar_maximized_button_focus_active_hover  = tip .. "maximized_focus_active_hover.svg"
 
 -- theme.wallpaper = themes_path .. "default/background.png"
-theme.wallpaper = "/home/maryll/Pictures/Wallpapers/firewatch.jpg"
+theme.wallpaper = "/home/maryll/Pictures/Wallpapers/firewatch.png"
 -- theme.wallpaper = "/home/maryll/.config/awesome/xkcd-wallpaper/xkcd-wallpaper.png"
 
 -- You can use your own layout icons like this:
@@ -192,7 +123,7 @@ theme.awesome_icon = theme_assets.awesome_icon(theme.menu_height,theme.bg_focus,
 
 -- Define the icon theme for application icons. If not set then the icons
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.
-theme.icon_theme = '/usr/share/icons/Arc'
+-- theme.icon_theme = '/usr/share/icons/Arc'
 
 -- Set different colors for urgent notifications.
 rnotification.connect_signal('request::rules', function()
@@ -201,6 +132,39 @@ rnotification.connect_signal('request::rules', function()
         properties = {bg = '#ff0000', fg = '#ffffff'}
     }
 end)
+
+-- tag preview widget
+theme.tag_preview_widget_border_radius = 5 -- Border radius of the widget (With AA)
+theme.tag_preview_client_border_radius = 5 -- Border radius of each client in the widget (With AA)
+theme.tag_preview_client_opacity = 0 -- Opacity of each client
+theme.tag_preview_client_bg = "#000000" -- The bg color of each client
+theme.tag_preview_client_border_color = theme.border_color_active -- The border color of each client
+theme.tag_preview_client_border_width = 1 -- The border width of each client
+theme.tag_preview_widget_bg = "#000000" -- The bg color of the widget
+theme.tag_preview_widget_border_color = "#000000" -- The border color of the widget
+theme.tag_preview_widget_border_width = 1 -- The border width of the widget
+theme.tag_preview_widget_margin = 5 -- The margin of the widget
+
+-- window switcher widget
+theme.window_switcher_widget_bg = "#000000"              -- The bg color of the widget
+theme.window_switcher_widget_border_width = 0            -- The border width of the widget
+theme.window_switcher_widget_border_radius = 10          -- The border radius of the widget
+theme.window_switcher_widget_border_color = theme.border_color_active    -- The border color of the widget
+theme.window_switcher_clients_spacing = 20               -- The space between each client item
+theme.window_switcher_client_icon_horizontal_spacing = 5 -- The space between client icon and text
+theme.window_switcher_client_width = 150                 -- The width of one client widget
+theme.window_switcher_client_height = 200              -- The height of one client widget
+theme.window_switcher_client_margins = 10                -- The margin between the content and the border of the widget
+theme.window_switcher_thumbnail_margins = 10             -- The margin between one client thumbnail and the rest of the widget
+theme.thumbnail_scale = false                            -- If set to true, the thumbnails fit policy will be set to "fit" instead of "auto"
+theme.window_switcher_name_margins = 10                  -- The margin of one clients title to the rest of the widget
+theme.window_switcher_name_valign = "center"             -- How to vertically align one clients title
+theme.window_switcher_name_forced_width = 200            -- The width of one title
+theme.window_switcher_name_font = "sans 11"              -- The font of all titles
+theme.window_switcher_name_normal_color = "#ffffff"      -- The color of one title if the client is unfocused
+theme.window_switcher_name_focus_color = theme.border_color_active       -- The color of one title if the client is focused
+theme.window_switcher_icon_valign = "center"             -- How to vertically align the one icon
+theme.window_switcher_icon_width = 40                    -- The width of one icon
 
 
 return theme

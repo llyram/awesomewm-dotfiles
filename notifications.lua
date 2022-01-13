@@ -10,7 +10,7 @@ naughty.config.spacing = 100
 
 naughty.config.defaults.timeout = 3
 naughty.config.defaults.screen = 1
-naughty.config.defaults.position = 'bottom_right'
+naughty.config.defaults.position = 'top_right'
 naughty.config.defaults.margin = dpi(16)
 naughty.config.defaults.ontop = true
 -- naughty.config.defaults.font = 'Sans Regular 9'
@@ -21,7 +21,7 @@ naughty.config.defaults.border_width = 0
 naughty.config.defaults.hover_timeout = nil
 naughty.config.defaults.border_width = dpi(0)
 -- naughty.config.defaults.border_color = '#bd93f9'
-naughty.config.defaults.bg_color = "#00000000"
+naughty.config.defaults.bg_color = "#000000"
 
 -- Error handling
 if _G.awesome.startup_errors then
@@ -77,8 +77,8 @@ naughty.connect_signal("request::display", function(n)
                 widget = wibox.container.place
             },
             bg = "#000000",
-            forced_height = dpi(25),
-            forced_width = dpi(50),
+            forced_height = dpi(20),
+            forced_width = dpi(20),
             widget = wibox.container.background,
             shape = gears.shape.rounded_rect,
         },
@@ -153,7 +153,7 @@ naughty.connect_signal("request::display", function(n)
             notification = n,
             type = "notification",
             shape = function(cr, width, height)
-                gears.shape.rounded_rect(cr, width, height, 3)
+                gears.shape.rounded_rect(cr, width, height, 10)
             end,
             widget_template = {
                 {
@@ -176,7 +176,7 @@ naughty.connect_signal("request::display", function(n)
                             margins = dpi(10),
                             widget = wibox.container.margin
                         },
-                        -- bg = "#282828",
+                        bg = beautiful.bg_focus,
                         widget = wibox.widget.background
         
                     },
@@ -190,8 +190,8 @@ naughty.connect_signal("request::display", function(n)
                                     font = "Product Sans Regular 12",
                                     widget = wibox.widget.textbox
                                 },
-                                widget = wibox.container.margin,
-                                bottom = dpi(5),
+                                widget = wibox.container.place,
+                                valign = center,
                             },
         
                             { ----- Body/Message -----
@@ -206,22 +206,22 @@ naughty.connect_signal("request::display", function(n)
         
                             },
                             actions,
-                            layout = wibox.layout.align.vertical
-                            -- expand = "none"
+                            layout = wibox.layout.align.vertical,
+                            expand = "inside"
         
                         },
         
-                        margins = dpi(5),
+                        margins = dpi(20),
                         widget = wibox.container.margin,
                     },
                     layout = wibox.layout.align.horizontal
                 },
         
                 strategy = "max",
-                height = dpi(180),
-                -- forced_height = 100,
-                forced_width = dpi(300),
-                -- forced_width = 400,
+                height = dpi(100),
+                -- forced_height = 50,
+                width = dpi(400),
+                -- forced_width = 300,
                 widget = wibox.container.constraint
             },
         }

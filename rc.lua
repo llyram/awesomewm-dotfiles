@@ -14,7 +14,7 @@ local dpi = require("beautiful.xresources").apply_dpi
 
 
 awesome.register_xproperty("WM_CLASS","string")
-
+-- menubar:set_xproperty("WM_CLASS", "menubar")
 -- Mouse and Keybindings
 require("keys")
 modkey = "Mod4"
@@ -29,6 +29,8 @@ local systray = require("widgets.systray")
 local mytasklist = require("widgets.tasklist.tasklist")
 -- require("widgets.dock.dock")
 -- local animationwidget = require("widgets.animationwidget")
+
+
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -46,6 +48,50 @@ end)
 -- {{{ Variable definitions
 -- fs define colours, icons, font and wallpapers.
 beautiful.init(require("theme.theme"))
+local nice = require("nice")
+nice()
+
+-- Bling
+local bling = require("bling")
+
+bling.widget.tag_preview.enable {
+    show_client_content = true,  -- Whether or not to show the client content
+    x = 10,                       -- The x-coord of the popup
+    y = 10,                       -- The y-coord of the popup
+    scale = 0.15,                 -- The scale of the previews compared to the screen
+    honor_padding = true,        -- Honor padding when creating widget size
+    honor_workarea = true,       -- Honor work area when creating widget size
+    placement_fn = function(c)    -- Place the widget using awful.placement (this overrides x & y)
+        awful.placement.top_left(c, {
+            margins = {
+                top = 40,
+                left = 30
+            }
+        })
+    end,
+    background_widget = wibox.widget {    -- Set a background image (like a wallpaper) for the widget 
+        image = beautiful.wallpaper,
+        horizontal_fit_policy = "fit",
+        vertical_fit_policy   = "fit",
+        widget = wibox.widget.imagebox
+    }
+}
+
+bling.widget.window_switcher.enable {
+    type = "thumbnail", -- set to anything other than "thumbnail" to disable client previews
+
+    -- keybindings (the examples provided are also the default if kept unset)
+    hide_window_switcher_key = "Escape", -- The key on which to close the popup
+    minimize_key = "n",                  -- The key on which to minimize the selected client
+    unminimize_key = "N",                -- The key on which to unminimize all clients
+    kill_client_key = "q",               -- The key on which to close the selected client
+    cycle_key = "Tab",                   -- The key on which to cycle through all clients
+    previous_key = "Left",               -- The key on which to select the previous client
+    next_key = "Right",                  -- The key on which to select the next client
+    vim_previous_key = "h",              -- Alternative key on which to select the previous client
+    vim_next_key = "l",                  -- Alternative key on which to select the next client
+}
+
 
 -- }}}
 
@@ -117,6 +163,7 @@ end)
 -- Desktop decorations
 screen.connect_signal("request::desktop_decoration", function(s)
      -- Each screen has its own tag table.
+    --  awful.tag({" 1 ", " 2 ", " 3 ", " 4 ", " 5 "},s, awful.layout.layouts[1])
      awful.tag({"  ", "  ", "  ", " 奈 ", "  "},s, awful.layout.layouts[1])
 
      -- Create an imagebox widget which will contain an icon indicating which layout we're using.
@@ -137,8 +184,10 @@ screen.connect_signal("request::desktop_decoration", function(s)
         spacing = 10,
         filter = awful.widget.taglist.filter.all,
         style = {
-            bg_focus = beautiful.bg_normal,
-            -- fg_focus = "#FFFFFF"
+            bg_focus = beautiful.fg_normal,
+            fg_focus = beautiful.bg_normal,
+            bg_normal = "#101010",
+            shape = gears.shape.rounded_rect
         },
         buttons = {
             awful.button({}, 1, function(t) t:view_only() end),
@@ -159,35 +208,73 @@ screen.connect_signal("request::desktop_decoration", function(s)
         widget_template = {
             {
                 {
-                    id     = 'text_role',
-                    widget = wibox.widget.textbox,
-                    -- forced_width = 17
+                    {
+                        id     = 'text_role',
+                        widget = wibox.widget.textbox,
+                        -- forced_width = 17
+                    },
+                    left  = -5,
+                    right = -5,
+                    widget = wibox.container.margin
                 },
-                left  = -5,
-                right = -5,
-                widget = wibox.container.margin
+                id     = 'background_role',
+                widget = wibox.container.background,
             },
-            id     = 'background_role',
-            widget = wibox.container.background,
-
-            
+            widget = wibox.container.margin,
+            top = 3,
+            bottom = 3,
+            create_callback = function(self, c3, index, objects) --luacheck: no unused args
+                self:get_children_by_id('text_role')[1].markup = '<b> '..index..' </b>'
+                self:connect_signal('mouse::enter', function()
+    
+                    -- BLING: Only show widget when there are clients in the tag
+                    if #c3:clients() > 0 then
+                        -- BLING: Update the widget with the new tag
+                        awesome.emit_signal("bling::tag_preview::update", c3)
+                        -- BLING: Show the widget
+                        awesome.emit_signal("bling::tag_preview::visibility", s, true)
+                    end
+    
+                    if self.bg ~= '#ff0000' then
+                        self.backup     = self.bg
+                        self.has_backup = true
+                    end
+                    self.bg = '#ff0000'
+                end)
+                self:connect_signal('mouse::leave', function()
+    
+                    -- BLING: Turn the widget off
+                    awesome.emit_signal("bling::tag_preview::visibility", s, false)
+    
+                    if self.has_backup then self.bg = self.backup end
+                end)
+            end,
+            update_callback = function(self, c3, index, objects) --luacheck: no unused args
+                self:get_children_by_id('text_role')[1].markup = '<b> '..index..' </b>'
+            end,
         },
     }
-
+    
 
     -- Create a tasklist widget
     s.mytasklist = mytasklist
 
     -- Create the wibox
-    s.mywibox = awful.wibar({position="top", screen = s, height = dpi(27)})
+    s.mywibox = awful.wibar({position="top", screen = s, height = dpi(35)})
+
+
+    s.mypromptbox = awful.widget.prompt()
 
     -- Add widgets to the wibox
     s.mywibox.widget = {
         layout = wibox.layout.align.horizontal,
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
-            wibox.container.background(wibox.layout.margin(mylayoutbox, dpi(5), 5, 5, 5), "#101010"),
+            -- wibox.container.background(
+                wibox.layout.margin(mylayoutbox, 8, 8, 8, 8),
+                --  "#101010"),
             s.mytaglist,
+            s.mypromptbox,
         },
         { -- Middle widgets
             nil,
@@ -228,6 +315,19 @@ screen.connect_signal("request::desktop_decoration", function(s)
 
  end)
 -- }}}
+
+awful.keyboard.append_global_keybindings({
+    awful.key({"Mod4"}, "/", 
+        function()
+            awful.prompt.run {
+                prompt = "Run Lua code: ",
+                textbox = awful.screen.focused().mypromptbox.widget,
+                exe_callback = awful.util.eval,
+                history_path = awful.util.get_cache_dir() .. "/history_eval"
+            }
+        end, 
+        {description = "lua execute prompt", group = "awesome"}),
+})
 
 -- {{{ Rules
 -- Rules to apply to new clients.
@@ -337,41 +437,41 @@ end)
 
 -- {{{ Titlebars
 -- Add a titlebar if titlebars_enabled is set to true in the rules.
-client.connect_signal("request::titlebars", function(c)
-    -- buttons for the titlebar
-    local buttons = {
-        awful.button({}, 1, function()
-            c:activate{context = "titlebar", action = "mouse_move"}
-        end), awful.button({}, 3, function()
-            c:activate{context = "titlebar", action = "mouse_resize"}
-        end)
-    }
+-- client.connect_signal("request::titlebars", function(c)
+--     -- buttons for the titlebar
+--     local buttons = {
+--         awful.button({}, 1, function()
+--             c:activate{context = "titlebar", action = "mouse_move"}
+--         end), awful.button({}, 3, function()
+--             c:activate{context = "titlebar", action = "mouse_resize"}
+--         end)
+--     }
 
-    awful.titlebar(c,{font = "Product Sans 7", size = dpi(25)}).widget = {
-        { -- Left
-            -- awful.titlebar.widget.iconwidget(c),
-            -- buttons = buttons,
-            layout = wibox.layout.fixed.horizontal
-        },
-        { -- Middle
-            { -- Title
-                align = "center",
-                widget = awful.titlebar.widget.titlewidget(c)
-            },
-            buttons = buttons,
-            layout = wibox.layout.flex.horizontal
-        },
-        { -- Right
-            awful.titlebar.widget.floatingbutton(c),
-            awful.titlebar.widget.stickybutton(c),
-            awful.titlebar.widget.ontopbutton(c),
-            awful.titlebar.widget.maximizedbutton(c),
-            awful.titlebar.widget.closebutton(c),
-            layout = wibox.layout.fixed.horizontal()
-        },
-        layout = wibox.layout.align.horizontal
-    }
-end)
+--     awful.titlebar(c,{font = "Product Sans 7", size = dpi(25)}).widget = {
+--         { -- Left
+--             -- awful.titlebar.widget.iconwidget(c),
+--             -- buttons = buttons,
+--             layout = wibox.layout.fixed.horizontal
+--         },
+--         { -- Middle
+--             { -- Title
+--                 align = "center",
+--                 widget = awful.titlebar.widget.titlewidget(c)
+--             },
+--             buttons = buttons,
+--             layout = wibox.layout.flex.horizontal
+--         },
+--         { -- Right
+--             awful.titlebar.widget.floatingbutton(c),
+--             awful.titlebar.widget.stickybutton(c),
+--             awful.titlebar.widget.ontopbutton(c),
+--             awful.titlebar.widget.maximizedbutton(c),
+--             awful.titlebar.widget.closebutton(c),
+--             layout = wibox.layout.fixed.horizontal()
+--         },
+--         layout = wibox.layout.align.horizontal
+--     }
+-- end)
 
 -- {{{ Notifications
 
@@ -406,7 +506,7 @@ end)
 -- end)
 
 -- Autostart
-awful.spawn.with_shell("compton")
+awful.spawn.with_shell("picom")
 awful.util.spawn("nm-applet --indicator")
 awful.util.spawn("blueman-applet")
 -- awful.util.spawn("kdeconnect-indicator")
@@ -414,4 +514,3 @@ awful.util.spawn("mictray")
 awful.util.spawn("xfce4-power-manager")
 awful.util.spawn("/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &")
 awful.spawn.with_shell("xrandr --dpi 96")
-awful.spawn.with_shell('bash -c \'a=$(xinput list | grep "Touchpad") && b=${a: -24:2} && xinput set-prop $b "Device Enabled" 0\'')
