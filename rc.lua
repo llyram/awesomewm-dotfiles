@@ -12,21 +12,22 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 require("awful.hotkeys_popup.keys")
 local dpi = require("beautiful.xresources").apply_dpi
 
+beautiful.init(require("theme.theme"))
 
 awesome.register_xproperty("WM_CLASS","string")
--- menubar:set_xproperty("WM_CLASS", "menubar")
--- Mouse and Keybindings
-require("keys")
+require "configuration"
+require "signal"
+require "ui"
 modkey = "Mod4"
 
 -- Notifications settings
-require('notifications')
+-- require('notifications')
 
 -- Initializing widgets
-local battery_widget = require("widgets.battery-widget.battery")
-local mytextclock = require("widgets.textclock")
-local systray = require("widgets.systray")
-local mytasklist = require("widgets.tasklist.tasklist")
+local battery_widget = require("ui.bar.battery-widget")
+local mytextclock = require("ui.bar.textclock")
+local systray = require("ui.bar.systray")
+local mytasklist = require("ui.bar.tasklist")
 -- require("widgets.dock.dock")
 -- local animationwidget = require("widgets.animationwidget")
 
@@ -44,21 +45,17 @@ naughty.connect_signal("request::display_error", function(message, startup)
     }
 end)
 -- }}}
-
--- {{{ Variable definitions
--- fs define colours, icons, font and wallpapers.
-beautiful.init(require("theme.theme"))
-local nice = require("nice")
+local nice = require "modules.nice"
 nice()
 
 -- Bling
-local bling = require("bling")
+local bling = require "modules.bling"
 
 bling.widget.tag_preview.enable {
-    show_client_content = true,  -- Whether or not to show the client content
+    show_client_content = false,  -- Whether or not to show the client content
     x = 10,                       -- The x-coord of the popup
     y = 10,                       -- The y-coord of the popup
-    scale = 0.15,                 -- The scale of the previews compared to the screen
+    scale = 0.1,                 -- The scale of the previews compared to the screen
     honor_padding = true,        -- Honor padding when creating widget size
     honor_workarea = true,       -- Honor work area when creating widget size
     placement_fn = function(c)    -- Place the widget using awful.placement (this overrides x & y)
@@ -91,9 +88,6 @@ bling.widget.window_switcher.enable {
     vim_previous_key = "h",              -- Alternative key on which to select the previous client
     vim_next_key = "l",                  -- Alternative key on which to select the next client
 }
-
-
--- }}}
 
 -- {{{ Menu
 -- Create a launcher widget and a main menu
@@ -148,17 +142,6 @@ end)
 
 -- {{{ Wibar
 
-
--- Wallpaper
-screen.connect_signal("request::wallpaper", function(s)
-    -- Wallpaper
-    if beautiful.wallpaper then
-        local wallpaper = beautiful.wallpaper
-        -- If wallpaper is a function, call it with the screen
-        if type(wallpaper) == "function" then wallpaper = wallpaper(s) end
-        gears.wallpaper.maximized(wallpaper, s, true)
-    end
-end)
 
 -- Desktop decorations
 screen.connect_signal("request::desktop_decoration", function(s)
@@ -329,163 +312,8 @@ awful.keyboard.append_global_keybindings({
         {description = "lua execute prompt", group = "awesome"}),
 })
 
--- {{{ Rules
--- Rules to apply to new clients.
-
-ruled.client.connect_signal("request::rules", function()
-
-    -- All clients will match this rule.
-    ruled.client.append_rule {
-        id = "global",
-        rule = {},
-        properties = {
-            focus = awful.client.focus.filter,
-            raise = true,
-            screen = awful.screen.preferred,
-            placement = awful.placement.no_overlap +
-                awful.placement.no_offscreen
-        }
-    }
-
-    -- Add titlebars to normal clients and dialogs
-    ruled.client.append_rule {
-        id = "titlebars",
-        rule_any = {
-            type = {
-                "Wine", "NetBeans IDE 8.2", "sun-awt-X11-XFramePeer"
-            }
-        },
-        properties = {titlebars_enabled = true}
-    }
-
-    -- Picture in picture
-    ruled.client.append_rule {
-        id = "Picture in picture",
-        rule_any = {
-            name = {"Picture-in-picture"}
-        },
-        properties = {
-            ontop = true,
-            floating = true,
-        }
-    }
-
-    -- removing border and tiling for teamviewer
-    ruled.client.append_rule {
-        id = "Teamviewer",
-        rule_any = {
-            class = {"TeamViewer"}
-        },
-        properties = {
-            border_width = 0,
-            floating = true,
-        }
-    }
-
-    
-
-    -- Floating clients.
-    ruled.client.append_rule {
-        id = "floating",
-        rule_any = {
-            instance = {
-                "copyq", 
-                "pinentry"
-            },
-            class = {
-                "Arandr", "Blueman-manager", "Gpick", "Kruler", "Sxiv",
-                "Tor Browser", "Wpa_gui", "veromix", "xtightvncviewer", "Wine",
-                "CPU Simulator", "pavucontrol", "Pavucontrol", "matplotlib", "Wihotspot-gui",
-            },
-            -- Note that the name property shown in xprop might be set slightly after creation of the client
-            -- and the name shown thfloatingere might not match defined rules here.
-            name = {
-                "Event Tester", -- xev.
-                "Volume Control",
-                "PlayOnLinux"
-                -- "Picture in picture"
-            },
-            role = {
-                "AlarmWindow", -- Thunderbird's calendar.
-                -- "ConfigManager", -- Thunderbird's about:config.
-                "pop-up" -- e.g. Google Chrome's (detached) Developer Tools.
-            }
-        },
-        except_any = {
-            class = {"crx_peoigcfhkflakdcipcclkneidghaaphd"},
-            name = {"csTimer"}
-        },
-        properties = {floating = true, titlebars_enabled = true}
-    }
-
-    ruled.client.append_rule {
-        id = "Cs timer",
-        rule_any = {
-            -- class = {"crx_peoigcfhkflakdcipcclkneidghaaphd"},
-            name = {"csTimer"}
-
-        },
-        properties = {
-            tiled = true,
-            
-        }
-    }
-
-end)
-
--- }}}
-
--- {{{ Titlebars
--- Add a titlebar if titlebars_enabled is set to true in the rules.
--- client.connect_signal("request::titlebars", function(c)
---     -- buttons for the titlebar
---     local buttons = {
---         awful.button({}, 1, function()
---             c:activate{context = "titlebar", action = "mouse_move"}
---         end), awful.button({}, 3, function()
---             c:activate{context = "titlebar", action = "mouse_resize"}
---         end)
---     }
-
---     awful.titlebar(c,{font = "Product Sans 7", size = dpi(25)}).widget = {
---         { -- Left
---             -- awful.titlebar.widget.iconwidget(c),
---             -- buttons = buttons,
---             layout = wibox.layout.fixed.horizontal
---         },
---         { -- Middle
---             { -- Title
---                 align = "center",
---                 widget = awful.titlebar.widget.titlewidget(c)
---             },
---             buttons = buttons,
---             layout = wibox.layout.flex.horizontal
---         },
---         { -- Right
---             awful.titlebar.widget.floatingbutton(c),
---             awful.titlebar.widget.stickybutton(c),
---             awful.titlebar.widget.ontopbutton(c),
---             awful.titlebar.widget.maximizedbutton(c),
---             awful.titlebar.widget.closebutton(c),
---             layout = wibox.layout.fixed.horizontal()
---         },
---         layout = wibox.layout.align.horizontal
---     }
--- end)
-
--- {{{ Notifications
-
-ruled.notification.connect_signal('request::rules', function()
-    -- All notifications will match this rule.
-    ruled.notification.append_rule {
-        rule = {},
-        properties = {screen = awful.screen.preferred, implicit_timeout = 5}
-    }
-end)
 
 
-
--- }}}
 
 -- Enable sloppy focus, so that focus follows mouse.
 client.connect_signal("mouse::enter", function(c)
@@ -499,18 +327,5 @@ end)
 client.connect_signal('unfocus', function(c)
     c.border_color = beautiful.border_color_normal
 end)
--- client.connect_signal('manage', function(c)
---     naughty.notify({
---         text = c.role
---     })
--- end)
 
--- Autostart
-awful.spawn.with_shell("picom")
-awful.util.spawn("nm-applet --indicator")
-awful.util.spawn("blueman-applet")
--- awful.util.spawn("kdeconnect-indicator")
-awful.util.spawn("mictray")
-awful.util.spawn("xfce4-power-manager")
-awful.util.spawn("/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &")
-awful.spawn.with_shell("xrandr --dpi 96")
+

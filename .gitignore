@@ -1,5 +1,2 @@
-/awesome-AnimationFramework
-/widgets/dock/
-/widgets/animationwidget.lua
-/bling
-/nice
+/modules/bling
+/modules/nice
