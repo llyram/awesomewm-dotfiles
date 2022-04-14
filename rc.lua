@@ -111,7 +111,8 @@ myawesomemenu = {
 mymainmenu = awful.menu({
     items = {
         {"awesome", myawesomemenu, beautiful.awesome_icon},
-        {"open terminal", terminal}
+        {"open terminal", terminal},
+        {"system monitor", terminal .. " -e btop --utf-force"}
     }
 })
 
@@ -167,10 +168,11 @@ screen.connect_signal("request::desktop_decoration", function(s)
         spacing = 10,
         filter = awful.widget.taglist.filter.all,
         style = {
-            bg_focus = beautiful.fg_normal,
-            fg_focus = beautiful.bg_normal,
-            bg_normal = "#101010",
-            shape = gears.shape.rounded_rect
+            bg_focus = beautiful.bg_focus,
+            fg_focus = beautiful.fg_normal,
+            bg_normal = beautiful.bg_normal,
+            shape = gears.shape.rounded_rect,
+            font = beautiful.taglist_font .. " 18"
         },
         buttons = {
             awful.button({}, 1, function(t) t:view_only() end),
@@ -237,14 +239,24 @@ screen.connect_signal("request::desktop_decoration", function(s)
             end,
         },
     }
-    
+    -- s.mytaglist = require("ui.bar.pacman_taglist")(s)
 
     -- Create a tasklist widget
     s.mytasklist = mytasklist
 
     -- Create the wibox
-    s.mywibox = awful.wibar({position="top", screen = s, height = dpi(35)})
+    s.mywibox = awful.wibar({position="top", screen = s, height = beautiful.wibar_height})
 
+    s.mypanel = wibox({
+        screen = s,
+        type = "dock",
+        ontop = true,
+        x = 400,
+        y = 0,
+        width = 400,
+        height = screen_height,
+        visible = false
+    })
 
     s.mypromptbox = awful.widget.prompt()
 
@@ -285,14 +297,14 @@ screen.connect_signal("request::desktop_decoration", function(s)
             },
             systray,
             mytextclock,
-            wibox.widget{ -- notification center
-                require('notif-center'),
-                widget = wibox.container.background,
-                -- bg = "#6c768a",
-                shape = function(cr, width, height)
-                    gears.shape.rectangular_tag(cr, width, height, 15)
-                end,
-            }
+            -- wibox.widget{ -- notification center
+            --     require('notif-center'),
+            --     widget = wibox.container.background,
+            --     -- bg = "#6c768a",
+            --     shape = function(cr, width, height)
+            --         gears.shape.rectangular_tag(cr, width, height, 15)
+            --     end,
+            -- }
         }
     }
 
@@ -327,5 +339,68 @@ end)
 client.connect_signal('unfocus', function(c)
     c.border_color = beautiful.border_color_normal
 end)
+
+local buttons_example = wibox {
+    visible = false,
+    -- bg = '#333333',
+    ontop = true,
+    height = 230,
+    width = 420,
+    shape = function(cr, width, height)
+        gears.shape.rounded_rect(cr, width, height, 3)
+    end
+}
+
+local button = wibox.widget{
+    {
+        {
+        text = "I'm a button!",
+        widget = wibox.widget.textbox,
+        -- bg = "#333333"
+    },
+    layout = wibox.container.place,
+    valigh = 'center',
+},
+widget = wibox.container.background,
+bg = "#333333",
+}
+
+local bottom_right_indent = wibox.widget {
+    -- {
+        button,
+        -- },
+        widget = wibox.container.margin,
+        bottom = 2,
+        right = 2,
+        color = "#5d5d5d"
+}
+
+local top_left_indent = wibox.widget {
+    bottom_right_indent,
+    widget  = wibox.container.margin,
+    top = 2,
+    left = 2,
+    color = "#131313"
+}
+
+buttons_example:setup {
+    top_left_indent,
+    widget = wibox.container.margin,
+    margins = 100,
+    color = "#333333"
+}
+
+local temp
+
+top_left_indent:connect_signal(
+    "button::press", 
+    function() 
+        temp = top_left_indent.color
+        top_left_indent.color = bottom_right_indent.color
+        bottom_right_indent.color = temp
+    end
+)
+
+awful.placement.centered(buttons_example, { margins = {top = 40}, parent = awful.screen.focused()})
 
 

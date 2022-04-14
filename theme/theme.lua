@@ -34,19 +34,19 @@ theme.xcolor14 = xrdb.color14 or "#c7e5d6"
 theme.xcolor15 = xrdb.color15 or "#eaeaea"
 
 -- fonts
-theme.font = "Product Sans Regular 10"
-theme.taglist_font = "MesloLGS NF 18"
+theme.font = "Product Sans Regular"
+theme.taglist_font = "MesloLGS NF"
 
 -- background
-theme.bg_normal = "#1E2227"
--- theme.bg_normal = dracula.background
+theme.bg_normal = "#1e1f29"
+-- theme.bg_normal = "#000000"
 -- theme.bg_focus = dracula.current_line
-theme.bg_focus = "#ffffff10"
+theme.bg_focus = "#44475a90"
 -- theme.bg_urgent = theme.bg_normal
 theme.bg_minimize = theme.bg_normal
 
 -- foreground
-theme.fg_normal = nord.nord6
+theme.fg_normal = "#f8f8f2"
 theme.fg_focus = nord.nord4
 theme.fg_urgent = nord.nord11
 theme.fg_minimize = theme.fg_normal
@@ -91,9 +91,9 @@ theme.hotkeys_modifiers_fg = "#ffffff"
 -- theme.taglist_bg_focus = "#ff0000"
 
 -- Generate taglist squares:
-local taglist_square_size = dpi(4)
-theme.taglist_squares_sel = theme_assets.taglist_squares_sel(taglist_square_size, theme.fg_normal)
-theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(taglist_square_size, theme.fg_normal)
+-- local taglist_square_size = dpi(4)
+-- theme.taglist_squares_sel = theme_assets.taglist_squares_sel(taglist_square_size, theme.fg_normal)
+-- theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(taglist_square_size, theme.fg_normal)
 
 -- Variables set for theming notifications:
 theme.notification_font = theme.font 
@@ -107,9 +107,12 @@ theme.notification_bg = "#252525"
 -- Variables set for theming the menu:
 -- menu_[bg|fg]_[normal|focus]
 -- menu_[border_color|border_width]
-theme.menu_submenu_icon = themes_path .. "default/submenu.png"
-theme.menu_height = dpi(15)
-theme.menu_width = dpi(100)
+-- theme.menu_submenu_icon = themes_path .. "default/submenu.png"
+theme.menu_height = dpi(30)
+theme.menu_width = dpi(200)
+
+theme.menubar_border_width = dpi(0)
+theme.menubar_border_color = "#00000000"
 
 -- You can add as many variables as
 -- you wish and access them by using
@@ -155,6 +158,8 @@ rnotification.connect_signal('request::rules', function()
     }
 end)
 
+
+
 -- tag preview widget
 theme.tag_preview_widget_border_radius = 5 -- Border radius of the widget (With AA)
 theme.tag_preview_client_border_radius = 5 -- Border radius of each client in the widget (With AA)
@@ -168,7 +173,7 @@ theme.tag_preview_widget_border_width = 0 -- The border width of the widget
 theme.tag_preview_widget_margin = 5 -- The margin of the widget
 
 -- window switcher widget
-theme.window_switcher_widget_bg = "#000000"              -- The bg color of the widget
+theme.window_switcher_widget_bg = "#00000060"              -- The bg color of the widget
 theme.window_switcher_widget_border_width = 0            -- The border width of the widget
 theme.window_switcher_widget_border_radius = 10          -- The border radius of the widget
 theme.window_switcher_widget_border_color = theme.border_color_active    -- The border color of the widget
@@ -189,6 +194,7 @@ theme.window_switcher_icon_valign = "center"             -- How to vertically al
 theme.window_switcher_icon_width = 20                    -- The width of one icon
 
 
+theme.wibar_height = dpi(35)
 
 return theme
 

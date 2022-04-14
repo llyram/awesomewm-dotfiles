@@ -2,13 +2,11 @@ local awful = require('awful')
 local gears = require('gears')
 local wibox = require('wibox')
 local beautiful = require('beautiful')
--- local icons = require('theme.icons')
--- local clickable_container = require('widget.material.clickable-container')
 local dpi = require('beautiful').xresources.apply_dpi
+local naughty = require('naughty')
 
 require("theme.colors")
-beautiful.init(require("theme.theme"))
-
+local rubato = require("modules.rubato")
 awesome.register_xproperty("WM_CLASS","string")
 
 local styles = {}
@@ -77,7 +75,11 @@ local cal = wibox.widget {
 local calWidget = wibox.widget {
     {
         nil,
-        {cal, margins = dpi(16), widget = wibox.container.margin},
+        {
+            cal, 
+            margins = dpi(16), 
+            widget = wibox.container.margin
+        },
         nil,
         layout = wibox.layout.flex.horizontal
     },
@@ -86,52 +88,74 @@ local calWidget = wibox.widget {
     widget = wibox.container.background
 }
 
-local popup = awful.popup {
+local calendar = awful.popup {
     ontop = true,
     visible = false,
-    position = "top_left",
+    y = beautiful.wibar_height + beautiful.useless_gap*2,
     -- shape = gears.shape.rounded_rect,
-    offset = { y = 5},
-    border_width = 1,
-    border_color = "#282828",
+    -- border_width = 1,
+    -- border_color = "#282828",
     widget = calWidget
 }
-popup:set_xproperty("WM_CLASS", "calendar")
 
-popup:buttons(
+
+local panel_timed = rubato.timed {
+    intro = 0.1,
+    duration = 0.3,
+    easing = rubato.quadratic,
+    subscribed = function(pos)
+        if pos >= awful.screen.focused().geometry.width then
+            calendar.visible = false
+        end
+        calendar.x = pos 
+    end
+}
+
+panel_timed.target = awful.screen.focused().geometry.width
+
+calendar:set_xproperty("WM_CLASS", "calendar")
+
+cal:buttons(
         awful.util.table.join(
                 awful.button({}, 4, function()
                     local a = cal:get_date()
                     a.month = a.month + 1
                     cal:set_date(nil)
                     cal:set_date(a)
-                    popup:set_widget(calWidget)
+                    -- calendar:set_widget(calWidget)
                 end),
                 awful.button({}, 5, function()
                     local a = cal:get_date()
                     a.month = a.month - 1
                     cal:set_date(nil)
                     cal:set_date(a)
-                    popup:set_widget(calWidget)
+                    -- calendar:set_widget(calWidget)
                 end)
         )
 )
 
 function cal_toggle()
-
-    if popup.visible then
-        -- to faster render the calendar refresh it and just hide
-        cal:set_date(nil) -- the new date is not set without removing the old one
-        cal:set_date(os.date('*t'))
-        popup:set_widget(nil) -- just in case
-        popup:set_widget(calWidget)
-        popup.visible = not popup.visible
-    else        
-        awful.placement.top_right(popup, { margins = { top = 40, right = 5}, parent = awful.screen.focused() })
-
-        popup.visible = true
-
+    if calendar.x == awful.screen.focused().geometry.width then
+        calendar.visible = true
+        panel_timed.target = awful.screen.focused().geometry.width - calendar.width - beautiful.useless_gap*2
+    else
+        panel_timed.target = awful.screen.focused().geometry.width
     end
+
+    -- if popup.visible then
+    --     -- to faster render the calendar refresh it and just hide
+    --     cal:set_date(nil) -- the new date is not set without removing the old one
+    --     cal:set_date(os.date('*t'))
+    --     popup:set_widget(nil) -- just in case
+    --     popup:set_widget(calWidget)
+    --     popup.visible = not popup.visible
+    -- else        
+    --     awful.placement.top_right(popup, { margins = { top = 40, right = 5}, parent = awful.screen.focused() })
+
+    --     popup.visible = true
+
+    -- end
+    
 end
 
 return cal

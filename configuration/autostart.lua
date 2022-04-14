@@ -11,6 +11,7 @@ local autostart_apps = {
     "mictray", -- systray applet to cut access to mic
     "xfce4-power-manager", -- start the power manager
     "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1", -- polkit
+    -- "redshift -l 22.71792:75.8333"
 
 }
 

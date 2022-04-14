@@ -43,7 +43,11 @@ local centered_tasklist = awful.widget.tasklist {
                     {
                         {
                             {
-                                {id = 'icon_role', widget = wibox.widget.imagebox},
+                                {   
+                                    id = 'icon_role',
+                                    image = beautiful.awesome_icon,
+                                    widget = wibox.widget.imagebox
+                                },
                                 margins = 1,
                                 right = 10,
                                 widget = wibox.container.margin

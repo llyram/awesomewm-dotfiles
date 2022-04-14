@@ -5,6 +5,8 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 local ruled = require("ruled")
 local menubar = require("menubar")
+menubar.match_empty = false
+menubar.show_categories = false
 local hotkeys_popup = require("awful.hotkeys_popup")
 require("awful.autofocus")
 require("awful.hotkeys_popup.keys")
@@ -38,21 +40,13 @@ awful.keyboard.append_global_keybindings({
         {description = 'toggle notification center',group = 'Awesome'}), 
     -- keyboard volume keys
     awful.key({}, 'XF86AudioRaiseVolume', 
-        -- function() 
-        --     volume.inc() 
-        -- end, 
         function() awful.spawn("pamixer -i 3") end,
         {description = 'volume up', group = 'hotkeys'}),
     awful.key({}, 'XF86AudioLowerVolume', 
-        -- function() 
-        --     volume.dec() 
-        -- end, 
         function() awful.spawn("pamixer -d 3") end,
         {description = 'volume down', group = 'hotkeys'}),
     awful.key({}, 'XF86AudioMute', 
-        function() 
-            volume.toggle() 
-        end, 
+        function() awful.spawn("pamixer -t") end,
         {description = 'toggle mute', group = 'hotkeys'}),
     -- brightness keys
     awful.key({}, "XF86MonBrightnessUp", 
@@ -120,7 +114,7 @@ awful.keyboard.append_global_keybindings({
             awful.util.spawn("/usr/lib/brave-bin/brave --profile-directory=Default --app-id=peoigcfhkflakdcipcclkneidghaaphd", {floating = false})
         end,
         {description = "open csTimer", group = "launcher"}),
-    awful.key({modkey}, "g",
+    awful.key({modkey,"Shift"}, "g",
         function()
             awful.util.spawn("gmtool admin start vpn-proxy")
         end,

@@ -33,7 +33,7 @@ local bright_adjust = awful.popup({
     bg = "#00000000",
     placement = function(c)
         awful.placement
-            .right(c, {margins = {right = beautiful.useless_gap * 2}})
+            .right(c, {margins = {right = beautiful.useless_gap * 4}})
     end
 })
 
