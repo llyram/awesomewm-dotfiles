@@ -1,0 +1,9 @@
+[submodule "modules/nice"]
+	path = modules/nice
+	url = https://github.com/Maryll-castelino/nice.git
+[submodule "modules/bling"]
+	path = modules/bling
+	url = https://github.com/BlingCorp/bling.git
+[submodule "modules/rubato"]
+	path = modules/rubato
+	url = https://github.com/andOrlando/rubato.git
