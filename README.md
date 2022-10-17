@@ -30,9 +30,9 @@ cd .config
 ```
 mv awesome myawesome-backup
 ```
-3. clone this repository
+3. clone this repository along with the submodules
 ```
-git clone https://github.com/Maryll-castelino/dotfiles.git awesome
+git clone --recurse-submodules -j8 https://github.com/Maryll-castelino/dotfiles.git awesome
 ```
 4. restart awesome
 
